@@ -1,9 +1,10 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Header from './components/Header'
 import Routes from './routes'
 
-import GlobalStyle from './styles/global'
+import GlobalStyle from './theme/global'
 
 function App() {
   return (
