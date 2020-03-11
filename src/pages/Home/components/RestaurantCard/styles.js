@@ -8,8 +8,14 @@ export const Card = styled.div`
 
   /* Other */
   opacity: 1;
+  color: #404040;    
   background-color: #FFF;
+  transition: all ease-out 0.2s;
   box-shadow: 0px 2px 4px #00000029;
+
+  &:hover {        
+    transform: scale(1.05);
+  }
 `
 
 export const OpenInfo = styled.div`

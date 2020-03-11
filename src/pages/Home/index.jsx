@@ -1,6 +1,5 @@
 import React from 'react';
-import { Container, Row, Col } from 'reactstrap';
-import arrayChunk from "lodash.chunk";
+import { Container } from 'reactstrap';
 
 import SearchField from '../../components/SearchField'
 import RestaurantCard from './components/RestaurantCard'
@@ -77,21 +76,13 @@ const Home = () => {
     },
   ]
 
-  const chukedData = arrayChunk(restaurants, 3)
-
   return (
     <div className='home'>
       <h2 className='mt-5 d-flex justify-content-center'>Bem-vindo ao Lista Rango</h2>
       <SearchField backgroundColor='#FBFBFB' textLabel='Buscar estabelecimento' />
-      <Container fluid className='d-flex flex-column align-items-center mt-5'>
-        {chukedData.map((row, rowIndex) => (
-          <Row key={rowIndex}>
-            {row.map(restaurant => (
-              <Col sm='12' md='6' lg='4' key={restaurant.key}>
-                <RestaurantCard restaurant={restaurant} />
-              </Col>
-            ))}
-          </Row>
+      <Container fluid className='d-flex align-items-center justify-content-center flex-wrap mt-5'>
+        {restaurants.map(restaurant => (
+          <RestaurantCard restaurant={restaurant} key={restaurant.key} />
         ))}
       </Container>
     </div>
