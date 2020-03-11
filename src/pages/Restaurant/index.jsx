@@ -20,11 +20,9 @@ const Restaurant = () => {
   }
 
   return (
-    <div className="restaurants">
-      <Container fluid className='mx-5 mt-4'>
-        <Header restaurant={restaurant} />
-      </Container>
-    </div>
+    <Container fluid className='mx-lg-5 mt-4 mb-3'>
+      <Header restaurant={restaurant} />
+    </Container>
   )
 };
 
