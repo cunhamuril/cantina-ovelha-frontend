@@ -13,12 +13,11 @@ export const SearchContainer = styled.div`
 
 export const SearchLabel = styled.span`
   /* Box Model */
-  width: 30%;
+  width: 35%;
   padding: 10px 0;
 
   /* Other */
-  font-size: 1.1rem;
-  background-color: #FFF;
+  font-size: 1.1rem;  
 
   ${media.lessThan('large')`
     display: none;
@@ -27,7 +26,7 @@ export const SearchLabel = styled.span`
 
 export const SearchInput = styled.input`
   /* Box Model */
-  width: 75%;
+  width: 100%;
   border: none;
   padding: 10px 20px;
 
@@ -39,7 +38,10 @@ export const SearchInput = styled.input`
   }
 
   ${media.lessThan('large')`
-    padding: 10px 0;
+    width: 80%;
+    padding: 10px 20px;
+
+    background-color: #FFF !important;
   `}
 
   ${media.greaterThan("large")`    
@@ -57,4 +59,10 @@ export const SearchIcon = styled.div`
   &:hover {
     cursor: pointer;
   }
+
+  ${media.lessThan('large')`    
+    width: 0;
+
+    background-color: #FFF !important;
+  `}
 `

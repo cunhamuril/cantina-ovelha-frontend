@@ -1,9 +1,13 @@
 import React from 'react';
-import { Container } from "reactstrap";
+import { Container } from 'reactstrap';
 
+import SearchField from '../../components/SearchField'
 import Header from './components/Header'
 
 import RestaurantLogo from '../../assets/images/restaurant-logo-md.png' // TEMP
+
+import { lightGray } from "../../theme/colors";
+import { Content } from './styles';
 
 const Restaurant = () => {
   /**
@@ -20,8 +24,16 @@ const Restaurant = () => {
   }
 
   return (
-    <Container fluid className='mx-lg-5 mt-4 mb-3'>
-      <Header restaurant={restaurant} />
+    <Container fluid className='mt-4'>
+      <div className='mx-lg-5'>
+        <Header restaurant={restaurant} />
+        <Content className='mt-5'>
+          <div className='content mr-md-3'>
+            <SearchField backgroundColor={lightGray} textLabel='Buscar no cardápio' />
+          </div>
+          <div className='menu' />
+        </Content>
+      </div>
     </Container>
   )
 };

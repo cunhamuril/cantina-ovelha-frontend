@@ -4,8 +4,9 @@ import { darken } from "../../../../theme/colors";
 
 export const Card = styled.div`
   /* Box Model */
-  width: 367px;
-  height: 100px;
+  /* min-width: 333px; */
+  max-width: 367px;
+  min-height: 100px;
   border-radius: 4px;
 
   /* Other */
@@ -24,7 +25,7 @@ export const OpenInfo = styled.div`
   /* Display */
   position: absolute;
   display: inline-flex;
-  transform: translateY(-15px) translateX(333px);
+  transform: translateY(-15px) translateX(305px);
 
   /* Box Model */
   width: 48px;

@@ -9,7 +9,7 @@ export const Container = styled.header`
 
   /* Other */
   color: ${darken};
-  line-height: 14px;    
+  line-height: 14px;
 
   ${media.lessThan('medium')`
     flex-direction: column

@@ -78,8 +78,10 @@ const Home = () => {
 
   return (
     <div className='home'>
-      <h2 className='mt-5 d-flex justify-content-center'>Bem-vindo ao Lista Rango</h2>
-      <SearchField backgroundColor='#FBFBFB' textLabel='Buscar estabelecimento' />
+      <h2 className='mt-5 d-flex justify-content-center text-center'>Bem-vindo ao Lista Rango</h2>
+      <Container className='d-flex align-items-center justify-content-center mt-4'>
+        <SearchField backgroundColor='#FBFBFB' textLabel='Buscar estabelecimento' />
+      </Container>
       <Container fluid className='d-flex align-items-center justify-content-center flex-wrap mt-5'>
         {restaurants.map(restaurant => (
           <RestaurantCard restaurant={restaurant} key={restaurant.key} />

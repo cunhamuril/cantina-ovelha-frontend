@@ -10,7 +10,7 @@ const Header = ({ restaurant }) => (
     </div>
     <div className='m-3'>
       <h3>{restaurant.name}</h3>
-      <p>{restaurant.description}</p>
+      <p className='mb-2'>{restaurant.description}</p>
       <small>
         Segunda à Sexta: <strong>{restaurant.weekday}</strong> <br />
         Sábados: <strong>{restaurant.weekend}</strong> <br />
