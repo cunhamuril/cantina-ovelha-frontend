@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import { darken } from "../../../../theme/colors";
+
 export const Card = styled.div`
   /* Box Model */
   width: 367px;
@@ -8,7 +10,7 @@ export const Card = styled.div`
 
   /* Other */
   opacity: 1;
-  color: #404040;    
+  color: ${darken};    
   background-color: #FFF;
   transition: all ease-out 0.2s;
   box-shadow: 0px 2px 4px #00000029;

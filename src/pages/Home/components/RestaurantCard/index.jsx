@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import { Link } from "react-router-dom";
 
+import { primary, primaryLight } from "../../../../theme/colors";
 import { Card, OpenInfo } from './styles';
 
 const RestaurantCard = ({ restaurant }) => {
@@ -10,7 +11,7 @@ const RestaurantCard = ({ restaurant }) => {
       <Card className='d-flex mb-5 mx-4'>
         <OpenInfo
           className='d-flex align-items-center justify-content-center'
-          style={{ backgroundColor: restaurant.isOpen ? '#2B0D61' : '#B5ABD4' }}
+          style={{ backgroundColor: restaurant.isOpen ? primary : primaryLight }}
         >
           <small>{restaurant.isOpen ? 'Aberto agora' : 'Fechado'}</small>
         </OpenInfo>
