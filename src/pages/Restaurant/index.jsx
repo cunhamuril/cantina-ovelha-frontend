@@ -1,20 +1,20 @@
 import React from 'react';
 import { Container } from 'reactstrap';
-import {
-  Accordion,
-  AccordionItem,
-  AccordionItemHeading,
-  AccordionItemButton,
-  AccordionItemPanel,
-} from 'react-accessible-accordion';
+import { Accordion } from 'react-accessible-accordion';
 
 import Header from './components/Header';
+import ProductCard from './components/ProductCard';
 import SearchField from '../../components/SearchField';
+import CategoryAccordionItem from './components/CategoryAccordionItem';
 
-import RestaurantLogo from '../../assets/images/restaurant-logo-md.png'; // TEMP
+/**
+ * TEMP
+ */
+import DishThumbnail from '../../assets/images/dish.png';
+import RestaurantLogo from '../../assets/images/restaurant-logo-md.png';
 
 import { Main } from './styles';
-import { lightGray, darken } from '../../theme/colors';
+import { lightGray } from '../../theme/colors';
 import 'react-accessible-accordion/dist/fancy-example.css';
 
 const Restaurant = () => {
@@ -37,6 +37,7 @@ const Restaurant = () => {
           {
             key: 1,
             name: 'Nome do Prato',
+            thumbnail: DishThumbnail,
             description:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
             price: 19.9,
@@ -45,6 +46,7 @@ const Restaurant = () => {
           {
             key: 2,
             name: 'Nome do Prato',
+            thumbnail: DishThumbnail,
             description:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
             price: 19.9,
@@ -53,6 +55,7 @@ const Restaurant = () => {
           {
             key: 3,
             name: 'Nome do Prato',
+            thumbnail: DishThumbnail,
             description:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
             price: 19.9,
@@ -61,6 +64,7 @@ const Restaurant = () => {
           {
             key: 4,
             name: 'Nome do Prato',
+            thumbnail: DishThumbnail,
             description:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
             price: 19.9,
@@ -75,6 +79,7 @@ const Restaurant = () => {
           {
             key: 1,
             name: 'Nome do Prato',
+            thumbnail: DishThumbnail,
             description:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
             price: 19.9,
@@ -83,6 +88,7 @@ const Restaurant = () => {
           {
             key: 2,
             name: 'Nome do Prato',
+            thumbnail: DishThumbnail,
             description:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
             price: 19.9,
@@ -91,6 +97,7 @@ const Restaurant = () => {
           {
             key: 3,
             name: 'Nome do Prato',
+            thumbnail: DishThumbnail,
             description:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
             price: 19.9,
@@ -99,6 +106,7 @@ const Restaurant = () => {
           {
             key: 4,
             name: 'Nome do Prato',
+            thumbnail: DishThumbnail,
             description:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
             price: 19.9,
@@ -113,6 +121,7 @@ const Restaurant = () => {
           {
             key: 1,
             name: 'Nome do Prato',
+            thumbnail: DishThumbnail,
             description:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
             price: 19.9,
@@ -121,6 +130,7 @@ const Restaurant = () => {
           {
             key: 2,
             name: 'Nome do Prato',
+            thumbnail: DishThumbnail,
             description:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
             price: 19.9,
@@ -129,6 +139,7 @@ const Restaurant = () => {
           {
             key: 3,
             name: 'Nome do Prato',
+            thumbnail: DishThumbnail,
             description:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
             price: 19.9,
@@ -137,6 +148,7 @@ const Restaurant = () => {
           {
             key: 4,
             name: 'Nome do Prato',
+            thumbnail: DishThumbnail,
             description:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
             price: 19.9,
@@ -151,6 +163,7 @@ const Restaurant = () => {
           {
             key: 1,
             name: 'Nome do Prato',
+            thumbnail: DishThumbnail,
             description:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
             price: 19.9,
@@ -159,6 +172,7 @@ const Restaurant = () => {
           {
             key: 2,
             name: 'Nome do Prato',
+            thumbnail: DishThumbnail,
             description:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
             price: 19.9,
@@ -167,6 +181,7 @@ const Restaurant = () => {
           {
             key: 3,
             name: 'Nome do Prato',
+            thumbnail: DishThumbnail,
             description:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
             price: 19.9,
@@ -175,6 +190,7 @@ const Restaurant = () => {
           {
             key: 4,
             name: 'Nome do Prato',
+            thumbnail: DishThumbnail,
             description:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
             price: 19.9,
@@ -203,26 +219,18 @@ const Restaurant = () => {
               allowZeroExpanded={true}
             >
               {restaurant.categories.map(category => (
-                <AccordionItem key={category.key} style={{ border: 'none' }}>
-                  <AccordionItemHeading>
-                    <AccordionItemButton
-                      style={{
-                        backgroundColor: '#FFF',
-                        borderBottom: `solid 1px ${darken}`,
-                        display: 'flex',
-                        flexDirection: 'row-reverse',
-                        justifyContent: 'space-between',
-                      }}
-                    >
-                      <strong>{category.name}</strong>
-                    </AccordionItemButton>
-                  </AccordionItemHeading>
-                  <AccordionItemPanel></AccordionItemPanel>
-                </AccordionItem>
+                <CategoryAccordionItem key={category.key} category={category}>
+                  {category.products.map(product => (
+                    <ProductCard
+                      category={category}
+                      product={product}
+                      key={product.key}
+                    />
+                  ))}
+                </CategoryAccordionItem>
               ))}
             </Accordion>
           </div>
-
           <div className="menu" />
         </Main>
       </div>

@@ -6,9 +6,9 @@ import { lightGray } from '../../theme/colors';
 export const Main = styled.div`
   /* Display */
   display: grid;
+  min-height: 100vh;
   grid-template-columns: 1fr 300px;
   grid-template-areas: 'content menu';
-  min-height: 100vh;
 
   .content {
     grid-area: content;
@@ -26,8 +26,8 @@ export const Main = styled.div`
 
   ${media.lessThan('huge')`
     .content {
-      grid-area: content;
       padding: 0;
+      grid-area: content;
     }
   `}
 `;
