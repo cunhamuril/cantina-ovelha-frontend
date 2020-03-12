@@ -3,7 +3,7 @@ import media from 'styled-media-query';
 
 export const SearchContainer = styled.div`
   /* Box Model */
-  max-width: 900px;
+  max-width: 100%;
   border-radius: 25px;
 
   /* Other */
@@ -40,7 +40,7 @@ export const SearchInput = styled.input`
 
   ${media.lessThan('large')`
     width: 80%;
-    padding: 10px 20px;  
+    padding: 10px;
   `}
 
   ${media.greaterThan('large')`    

@@ -3,7 +3,7 @@ import media from 'styled-media-query';
 
 import { lightGray } from '../../theme/colors';
 
-export const Content = styled.div`
+export const Main = styled.div`
   /* Display */
   display: grid;
   grid-template-columns: 1fr 300px;
@@ -12,6 +12,7 @@ export const Content = styled.div`
 
   .content {
     grid-area: content;
+    padding-right: 10rem;
   }
 
   .menu {
@@ -20,6 +21,13 @@ export const Content = styled.div`
   }
 
   ${media.lessThan('large')`
-    grid-template-areas: 'content content';
+    grid-template-areas: 'content content';    
+  `}
+
+  ${media.lessThan('huge')`
+    .content {
+      grid-area: content;
+      padding: 0;
+    }
   `}
 `;

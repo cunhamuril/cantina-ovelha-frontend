@@ -82,10 +82,12 @@ const Home = () => {
         Bem-vindo ao Lista Rango
       </h2>
       <Container className="d-flex align-items-center justify-content-center mt-4">
-        <SearchField
-          backgroundColor="#FBFBFB"
-          textLabel="Buscar estabelecimento"
-        />
+        <div className="w-100 px-md-5 mx-md-5">
+          <SearchField
+            textLabel="Buscar estabelecimento"
+            backgroundColor="#FBFBFB"
+          />
+        </div>
       </Container>
       <Container
         fluid

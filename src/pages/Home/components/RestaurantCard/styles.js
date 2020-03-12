@@ -25,7 +25,7 @@ export const OpenInfo = styled.div`
   /* Display */
   position: absolute;
   display: inline-flex;
-  transform: translateY(-15px) translateX(305px);
+  transform: translateY(-15px) translateX(336px);
 
   /* Box Model */
   width: 48px;
