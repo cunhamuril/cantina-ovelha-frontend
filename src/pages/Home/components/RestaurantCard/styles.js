@@ -1,6 +1,6 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-import { darken } from "../../../../theme/colors";
+import { darken } from '../../../../theme/colors';
 
 export const Card = styled.div`
   /* Box Model */
@@ -11,15 +11,15 @@ export const Card = styled.div`
 
   /* Other */
   opacity: 1;
-  color: ${darken};    
-  background-color: #FFF;
+  color: ${darken};
+  background-color: #fff;
   transition: all ease-out 0.2s;
   box-shadow: 0px 2px 4px #00000029;
 
-  &:hover {        
+  &:hover {
     transform: scale(1.05);
   }
-`
+`;
 
 export const OpenInfo = styled.div`
   /* Display */
@@ -36,9 +36,9 @@ export const OpenInfo = styled.div`
   font-size: 11px;
 
   small {
-    color: #FFF;
+    color: #fff;
     line-height: 10px;
     font-weight: bold;
     text-align: center;
   }
-`
+`;

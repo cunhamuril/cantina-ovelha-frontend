@@ -1,7 +1,7 @@
-import styled from 'styled-components'
-import media from 'styled-media-query'
+import styled from 'styled-components';
+import media from 'styled-media-query';
 
-import { lightGray } from "../../theme/colors";
+import { lightGray } from '../../theme/colors';
 
 export const Content = styled.div`
   /* Display */
@@ -10,14 +10,8 @@ export const Content = styled.div`
   grid-template-areas: 'content menu';
   min-height: 100vh;
 
-  
-
-  /* Box Model */
-
-  /* Other */
-
   .content {
-    grid-area: content;    
+    grid-area: content;
   }
 
   .menu {
@@ -28,4 +22,4 @@ export const Content = styled.div`
   ${media.lessThan('large')`
     grid-template-areas: 'content content';
   `}
-`
+`;

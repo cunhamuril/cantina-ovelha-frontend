@@ -1,8 +1,8 @@
-import React from 'react'
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import Home from '../pages/Home'
-import Restaurant from '../pages/Restaurant'
+import Home from '../pages/Home';
+import Restaurant from '../pages/Restaurant';
 
 const Routes = () => (
   <BrowserRouter>
@@ -11,6 +11,6 @@ const Routes = () => (
       <Route path="/restaurants" exact component={Restaurant} />
     </Switch>
   </BrowserRouter>
-)
+);
 
-export default Routes
+export default Routes;
