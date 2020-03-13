@@ -18,6 +18,7 @@ const CategoryAccordionItem = ({ category, children }) => (
         style={{
           backgroundColor: '#FFF',
           borderBottom: `solid 1px ${darken}`,
+          paddingBottom: 6,
           display: 'flex',
           flexDirection: 'row-reverse',
           justifyContent: 'space-between',
@@ -27,7 +28,7 @@ const CategoryAccordionItem = ({ category, children }) => (
       </AccordionItemButton>
     </AccordionItemHeading>
     <AccordionItemPanel className="px-0">
-      <div className="d-flex align-items-center justify-content-center flex-wrap">
+      <div className="d-flex align-items-center justify-content-center flex-wrap pb-4">
         {children}
       </div>
     </AccordionItemPanel>
