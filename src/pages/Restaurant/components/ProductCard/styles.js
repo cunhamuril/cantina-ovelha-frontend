@@ -20,25 +20,28 @@ export const Container = styled.div`
     font-weight: 500;
     color: ${secondary};
   }
-
-  .promotional-price {
-    text-decoration: line-through;
-  }
 `;
 
 export const Promo = styled.div`
   /* Box Model */
   width: 103px;
   height: 21px;
+  padding: 0 10px;
   border-radius: 15px;
 
   /* Other */
-  color: #fff;
-  font-size: 8px;
-  font-weight: 700;
-  line-height: 14px;
   background-color: ${primary};
   transform: translateX(10px) translateY(-5px);
+
+  span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    color: #fff;
+    font-size: 8px;
+    font-weight: 700;
+  }
 
   .icon {
     margin-right: 2px;

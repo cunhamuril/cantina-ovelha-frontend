@@ -33,7 +33,7 @@ const ProductCard = ({ product, category }) => (
         }`}</span>
         {product.promotional_price && (
           <small className="promotional-price ml-2 text-muted">
-            {`R$ ${product.price.toFixed(2)}`}
+            <del>{`R$ ${product.price.toFixed(2)}`}</del>
           </small>
         )}
       </div>
