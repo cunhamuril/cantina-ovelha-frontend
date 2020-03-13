@@ -67,7 +67,7 @@ const Restaurant = () => {
             thumbnail: DishThumbnail,
             description:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
-            price: 19.9,
+            price: 25.99,
             promotional_price: 19.9,
           },
         ],
@@ -92,7 +92,7 @@ const Restaurant = () => {
             description:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
             price: 19.9,
-            promotional_price: null,
+            promotional_price: 11.22,
           },
           {
             key: 3,

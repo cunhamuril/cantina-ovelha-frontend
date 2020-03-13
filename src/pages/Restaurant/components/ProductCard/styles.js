@@ -8,8 +8,20 @@ export const Container = styled.div`
   max-height: 115px;
 
   /* Other */
+  cursor: pointer;
   color: ${darken};
   box-shadow: 0px 4px 8px #00000029;
+  transition: all ease-out 0.2s;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  h6 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 
   .description {
     font-size: 12px;
