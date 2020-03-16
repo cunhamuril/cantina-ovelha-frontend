@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { primary, primaryLight } from '../../../../theme/colors';
-import { Card, OpenInfo } from './styles';
+import { Card, Thumbnail, OpenInfo } from './styles';
 
 const RestaurantCard = ({ restaurant }) => {
   return (
@@ -18,7 +18,7 @@ const RestaurantCard = ({ restaurant }) => {
           <small>{restaurant.isOpen ? 'Aberto agora' : 'Fechado'}</small>
         </OpenInfo>
         <div style={{ maxWidth: 100, maxHeight: 100 }}>
-          <img src={restaurant.thumbnail} alt="logo" />
+          <Thumbnail style={{ backgroundImage: `url(${restaurant.logo})` }} />
         </div>
         <div className="d-flex flex-column justify-content-center mx-4 w-100">
           <h5 className="m-0" style={{ maxHeight: 50 }}>

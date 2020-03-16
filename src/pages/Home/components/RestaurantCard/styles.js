@@ -36,6 +36,13 @@ export const Card = styled.div`
   `}
 `;
 
+export const Thumbnail = styled.div`
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  background-position: center;
+`;
+
 export const OpenInfo = styled.div`
   /* Display */
   position: absolute;
