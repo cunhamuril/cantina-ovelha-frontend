@@ -39,9 +39,9 @@ const Restaurant = () => {
             name: 'Nome do Prato',
             thumbnail: DishThumbnail,
             description:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
             price: 19.9,
-            promotional_price: null,
+            promotional_price: 10,
           },
           {
             key: 2,

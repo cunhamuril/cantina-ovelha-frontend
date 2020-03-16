@@ -35,9 +35,15 @@ const ProductModal = ({ isOpen, toggle, product, price }) => {
   );
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle} centered size="lg">
+    <Modal
+      isOpen={isOpen}
+      toggle={toggle}
+      centered
+      size="lg"
+      style={{ maxWidth: 601 }}
+    >
       <ModalHeader toggle={toggle} close={closeBtn} className="border-0 p-0" />
-      <ModalBody className="d-flex flex-column align-items-center mt-3">
+      <ModalBody className="d-flex flex-column align-items-center">
         <Thumbnail style={{ backgroundImage: `url(${DishImage})` }} />
         <ProductContent className="mt-5 d-flex align-items-center flex-wrap">
           <div className="product-info col-lg-6 col-sm-12">

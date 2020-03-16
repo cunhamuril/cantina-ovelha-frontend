@@ -34,7 +34,7 @@ const ProductCard = ({ product, category }) => {
   return (
     <Container
       key={product.key}
-      className="d-flex align-items-center justify-content-center"
+      className="d-flex align-items-center"
       onClick={toggleModal}
     >
       <div style={{ maxWidth: 115, maxHeight: 115 }}>
@@ -42,7 +42,9 @@ const ProductCard = ({ product, category }) => {
       </div>
       <div className="p-3">
         <div className="d-flex justify-content-between">
-          <h6>{product.name}</h6>
+          <h6 style={{ maxWidth: product.promotional_price ? 124 : 200 }}>
+            {product.name}
+          </h6>
           {product.promotional_price && (
             <Promo className="d-flex align-items-center justify-content-center">
               <FaAward size="13" className="icon" />

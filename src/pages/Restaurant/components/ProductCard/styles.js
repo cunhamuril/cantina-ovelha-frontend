@@ -6,7 +6,7 @@ import { darken, secondary, primary } from '../../../../theme/colors';
 export const Container = styled.div`
   /* Box Model */
   margin: 15px;
-  max-width: 377px;
+  width: 386px;
   max-height: 115px;
 
   /* Other */
@@ -20,15 +20,24 @@ export const Container = styled.div`
   }
 
   h6 {
-    max-width: 200px;
+    margin: 0;
+    margin-top: 10px;
+
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
 
   .description {
+    margin: 5px 0;
+    max-width: 200px;
+    max-height: 43px;
+
     font-size: 12px;
     line-height: 14px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .price {
@@ -43,7 +52,7 @@ export const Container = styled.div`
 
 export const Promo = styled.div`
   /* Display */
-  transform: translateX(10px) translateY(-5px);
+  transform: translate(30px, 5px);
 
   /* Box Model */
   max-width: 103px;
@@ -68,7 +77,7 @@ export const Promo = styled.div`
   }
 
   ${media.lessThan('small')`
-    padding: 10px;
+    transform: translateX(10px);    
 
     p{
       display: none;    

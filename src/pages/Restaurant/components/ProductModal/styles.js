@@ -9,14 +9,16 @@ import {
 } from '../../../../theme/colors';
 
 export const Thumbnail = styled.div`
-  width: 93%;
-  height: 260px;
+  margin: 10px;
+
+  width: 97%;
+  height: 200px;
   background-size: cover;
   background-position: center;
 
-  ${media.lessThan('medium')`
+  ${media.lessThan('small')`
     width: 100%;
-    height: 196px;
+    margin: 0;
   `}
 `;
 
@@ -55,7 +57,7 @@ export const Counter = styled.div`
 export const CloseBtn = styled.button`
   /* Display */
   position: absolute;
-  transform: translate(775px, -25px);
+  transform: translate(575px, -25px);
 
   /* Box Model */
   width: 48px;
@@ -68,10 +70,6 @@ export const CloseBtn = styled.button`
   cursor: pointer;
   font-size: 25px;
   background-color: #fff;
-
-  ${media.lessThan('medium')`
-    transform: translate(475px, -25px);
-  `}
 
   ${media.lessThan('small')`
     position: relative;
