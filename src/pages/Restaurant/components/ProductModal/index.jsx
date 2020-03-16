@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FaTimes } from 'react-icons/fa';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
@@ -24,9 +24,11 @@ const ProductModal = ({ isOpen, toggle, product, price }) => {
     if (type === 'less' && counter > 1) {
       setCounter(counter - 1);
     }
-
-    setPriceCount(price * counter);
   };
+
+  useEffect(() => {
+    setPriceCount(price * counter);
+  }, [counter, price]);
 
   const closeBtn = (
     <CloseBtn onClick={toggle}>
