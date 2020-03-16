@@ -1,81 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container } from 'reactstrap';
 
 import SearchField from '../../components/SearchField';
 import RestaurantCard from './components/RestaurantCard';
 
-import RestaurantLogo from '../../assets/images/restaurant-logo.png'; // TEMP
+import api from '../../services/api';
+// import RestaurantLogo from '../../assets/images/restaurant-logo.png'; // TEMP
 
 const Home = () => {
-  /**
-   * TEMP
-   */
-  const restaurants = [
-    {
-      key: 1,
-      name: 'Nome do restaurante Nome do restaurante',
-      address:
-        'Endereço do restaurante Endereço do restaurante Endereço do restaurante Endereço do restaurante',
-      isOpen: true,
-      logo: RestaurantLogo,
-    },
-    {
-      key: 2,
-      name: 'Nome do restaurante',
-      address: 'Endereço do restaurante',
-      isOpen: true,
-      logo: RestaurantLogo,
-    },
-    {
-      key: 3,
-      name: 'Nome do restaurante',
-      address: 'Endereço do restaurante',
-      isOpen: true,
-      logo: RestaurantLogo,
-    },
-    {
-      key: 4,
-      name: 'Nome do restaurante',
-      address: 'Endereço do restaurante',
-      isOpen: false,
-      logo: RestaurantLogo,
-    },
-    {
-      key: 5,
-      name: 'Nome do restaurante',
-      address: 'Endereço do restaurante',
-      isOpen: false,
-      logo: RestaurantLogo,
-    },
-    {
-      key: 6,
-      name: 'Nome do restaurante',
-      address: 'Endereço do restaurante',
-      isOpen: true,
-      logo: RestaurantLogo,
-    },
-    {
-      key: 7,
-      name: 'Nome do restaurante',
-      address: 'Endereço do restaurante',
-      isOpen: false,
-      logo: RestaurantLogo,
-    },
-    {
-      key: 8,
-      name: 'Nome do restaurante',
-      address: 'Endereço do restaurante',
-      isOpen: false,
-      logo: RestaurantLogo,
-    },
-    {
-      key: 9,
-      name: 'Nome do restaurante',
-      address: 'Endereço do restaurante',
-      isOpen: true,
-      logo: RestaurantLogo,
-    },
-  ];
+  const [restaurants, setRestaurants] = useState([]);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  async function loadData() {
+    const req = await api.get('/restaurants');
+    setRestaurants(req.data);
+  }
 
   return (
     <div className="home">
@@ -95,7 +37,10 @@ const Home = () => {
         className="d-flex align-items-center justify-content-center flex-wrap mt-5"
       >
         {restaurants.map(restaurant => (
-          <RestaurantCard restaurant={restaurant} key={restaurant.key} />
+          <RestaurantCard
+            restaurant={restaurant}
+            key={restaurant.id_restaurant}
+          />
         ))}
       </Container>
     </div>
