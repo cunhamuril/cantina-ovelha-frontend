@@ -28,7 +28,7 @@ const Restaurant = () => {
     weekday: '11:30 às 15:00',
     weekend: '11:30 às 22:00',
     holiday: '11:30 às 15:00',
-    thumbnail: RestaurantLogo,
+    logo: RestaurantLogo,
     categories: [
       {
         key: 1,

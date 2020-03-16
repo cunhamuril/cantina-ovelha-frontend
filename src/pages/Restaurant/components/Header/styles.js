@@ -1,9 +1,9 @@
-import styled from 'styled-components'
-import media from 'styled-media-query'
+import styled from 'styled-components';
+import media from 'styled-media-query';
 
 import { darken } from '../../../../theme/colors';
 
-export const Container = styled.header`      
+export const Container = styled.header`
   /* Box Model */
   max-width: 695px;
 
@@ -14,4 +14,11 @@ export const Container = styled.header`
   ${media.lessThan('medium')`
     flex-direction: column
   `}
-`
+`;
+
+export const Thumbnail = styled.div`
+  width: 145px;
+  height: 145px;
+  background-size: cover;
+  background-position: center;
+`;
