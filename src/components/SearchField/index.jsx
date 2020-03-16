@@ -1,40 +1,38 @@
 import React, { useRef } from 'react';
-import PropTypes from 'prop-types'
-import { Container } from 'reactstrap';
+import PropTypes from 'prop-types';
 import { MdSearch } from 'react-icons/md';
 
-import { SearchContainer, SearchLabel, SearchInput, SearchIcon } from './styles';
+import {
+  SearchContainer,
+  SearchLabel,
+  SearchInput,
+  SearchIcon,
+} from './styles';
 
 const SearchField = ({ backgroundColor, textLabel }) => {
-  const searchInput = useRef()
+  const searchInput = useRef();
 
   return (
-    <Container className='d-flex align-items-center justify-content-center'>
-      <SearchContainer className='w-100 d-flex align-items-center justify-content-center mt-4'>
-        <SearchLabel
-          className='ml-5'
-          onClick={() => searchInput.current.focus()}
-        >
-          {textLabel}
-        </SearchLabel>
+    <SearchContainer
+      className="w-100 d-flex align-items-center justify-content-center"
+      style={{ backgroundColor }}
+    >
+      <SearchLabel onClick={() => searchInput.current.focus()}>
+        {textLabel}
+      </SearchLabel>
 
-        <SearchInput
-          style={{ backgroundColor }}
-          placeholder={textLabel}
-          ref={searchInput}
-        />
+      <SearchInput placeholder={textLabel} ref={searchInput} />
 
-        <SearchIcon style={{ backgroundColor }} >
-          <MdSearch size='24' />
-        </SearchIcon>
-      </SearchContainer>
-    </Container>
-  )
-}
+      <SearchIcon>
+        <MdSearch size="24" />
+      </SearchIcon>
+    </SearchContainer>
+  );
+};
 
 SearchField.propTypes = {
   backgroundColor: PropTypes.string.isRequired,
-  textLabel: PropTypes.string.isRequired
-}
+  textLabel: PropTypes.string.isRequired,
+};
 
 export default SearchField;
