@@ -50,6 +50,13 @@ export const Container = styled.div`
   `}
 `;
 
+export const Thumbnail = styled.div`
+  width: 115px;
+  height: 115px;
+  background-size: cover;
+  background-position: center;
+`;
+
 export const Promo = styled.div`
   /* Display */
   transform: translate(30px, 5px);

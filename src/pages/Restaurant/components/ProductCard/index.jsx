@@ -4,7 +4,7 @@ import { FaAward } from 'react-icons/fa';
 
 import ProductModal from '../ProductModal';
 
-import { Container, Promo } from './styles';
+import { Container, Thumbnail, Promo } from './styles';
 
 const ProductCard = ({ product, category }) => {
   const [modal, setModal] = useState(false);
@@ -37,9 +37,7 @@ const ProductCard = ({ product, category }) => {
       className="d-flex align-items-center"
       onClick={toggleModal}
     >
-      <div style={{ maxWidth: 115, maxHeight: 115 }}>
-        <img src={product.thumbnail} alt="Logo" />
-      </div>
+      <Thumbnail style={{ backgroundImage: `url(${product.thumbnail})` }} />
       <div className="p-3">
         <div className="d-flex justify-content-between">
           <h6 style={{ maxWidth: product.promotional_price ? 124 : 200 }}>
