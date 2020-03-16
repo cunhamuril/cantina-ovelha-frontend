@@ -2,9 +2,10 @@ import React from 'react';
 import { Container } from 'reactstrap';
 import { Accordion } from 'react-accessible-accordion';
 
+import BackButton from '../../components/BackButton';
+import SearchField from '../../components/SearchField';
 import Header from './components/Header';
 import ProductCard from './components/ProductCard';
-import SearchField from '../../components/SearchField';
 import CategoryAccordionItem from './components/CategoryAccordionItem';
 
 /**
@@ -204,6 +205,7 @@ const Restaurant = () => {
   return (
     <Container fluid className="mt-4">
       <div className="mx-md-5">
+        <BackButton />
         <Header restaurant={restaurant} />
 
         <Main className="mt-5">
