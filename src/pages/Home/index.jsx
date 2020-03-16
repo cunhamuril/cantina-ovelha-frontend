@@ -13,8 +13,9 @@ const Home = () => {
   const restaurants = [
     {
       key: 1,
-      name: 'Nome do restaurante',
-      address: 'Endereço do restaurante',
+      name: 'Nome do restaurante Nome do restaurante',
+      address:
+        'Endereço do restaurante Endereço do restaurante Endereço do restaurante Endereço do restaurante',
       isOpen: true,
       thumbnail: RestaurantLogo,
     },
