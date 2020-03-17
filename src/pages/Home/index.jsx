@@ -1,25 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Container } from 'reactstrap';
+import { Container, Spinner } from 'reactstrap';
 
 import SearchField from '../../components/SearchField';
 import RestaurantCard from './components/RestaurantCard';
 
 import api from '../../services/api';
-// import RestaurantLogo from '../../assets/images/restaurant-logo.png'; // TEMP
-
 const Home = () => {
   const [restaurants, setRestaurants] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     loadData();
   }, []);
 
   async function loadData() {
-    const req = await api.get('/restaurants');
+    setLoading(true);
 
-    console.log(req.data);
-
-    setRestaurants(req.data);
+    try {
+      const req = await api.get('/restaurants');
+      setRestaurants(req.data);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -39,12 +42,16 @@ const Home = () => {
         fluid
         className="d-flex align-items-center justify-content-center flex-wrap mt-5"
       >
-        {restaurants.map(restaurant => (
-          <RestaurantCard
-            restaurant={restaurant}
-            key={restaurant.id_restaurant}
-          />
-        ))}
+        {loading ? (
+          <Spinner size="lg" color="info" />
+        ) : (
+          restaurants.map(restaurant => (
+            <RestaurantCard
+              restaurant={restaurant}
+              key={restaurant.id_restaurant}
+            />
+          ))
+        )}
       </Container>
     </div>
   );
