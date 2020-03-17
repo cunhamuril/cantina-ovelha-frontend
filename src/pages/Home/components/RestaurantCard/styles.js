@@ -29,6 +29,8 @@ export const Card = styled.div`
   }
 
   ${media.lessThan('small')`
+    width: 320px;    
+
     div > h5,
     div > small {
       max-width: 160px;
