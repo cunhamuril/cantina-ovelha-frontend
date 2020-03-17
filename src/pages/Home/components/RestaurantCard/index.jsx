@@ -23,7 +23,10 @@ const RestaurantCard = ({ restaurant }) => {
   }, [restaurant.address]);
 
   return (
-    <Link to="/restaurants" style={{ textDecoration: 'none' }}>
+    <Link
+      to={`/restaurants/${restaurant.id_restaurant}`}
+      style={{ textDecoration: 'none' }}
+    >
       <Card className="d-flex mb-5 mx-4">
         <OpenInfo
           className="d-flex align-items-center justify-content-center"
