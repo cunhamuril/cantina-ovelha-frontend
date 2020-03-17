@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
@@ -8,6 +8,28 @@ import { primary, primaryLight } from '../../../../theme/colors';
 import { Card, Thumbnail, OpenInfo } from './styles';
 
 const RestaurantCard = ({ restaurant }) => {
+  const [address, setAddress] = useState('');
+
+  useEffect(() => {
+    // Load address data
+    function loadAddress() {
+      if (
+        restaurant.address &&
+        Array.isArray(restaurant.address) &&
+        restaurant.address.length > 0
+      ) {
+        const { number, street, district, city, state } = restaurant.address[0];
+        setAddress(
+          `${street}, ${number || 'S/N'}, ${district}, ${city}-${state}`
+        );
+      } else {
+        setAddress(null);
+      }
+    }
+
+    loadAddress();
+  }, [restaurant.address]);
+
   return (
     <Link to="/restaurants" style={{ textDecoration: 'none' }}>
       <Card className="d-flex mb-5 mx-4">
@@ -26,9 +48,7 @@ const RestaurantCard = ({ restaurant }) => {
         <div style={{ maxWidth: 100, maxHeight: 100 }}>
           <Thumbnail
             style={{
-              backgroundImage: `url(${
-                restaurant.logo ? restaurant.logo : DefaultImage
-              })`,
+              backgroundImage: `url(${restaurant.logo || DefaultImage})`,
             }}
           />
         </div>
@@ -39,8 +59,9 @@ const RestaurantCard = ({ restaurant }) => {
           <small
             className="restaurant-address text-muted"
             style={{ maxHeight: 20, whiteSpace: 'nowrap' }}
+            title={address && address}
           >
-            {restaurant.address}
+            {address || 'Sem endereço'}
           </small>
         </div>
       </Card>

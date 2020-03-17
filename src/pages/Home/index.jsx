@@ -16,6 +16,9 @@ const Home = () => {
 
   async function loadData() {
     const req = await api.get('/restaurants');
+
+    console.log(req.data);
+
     setRestaurants(req.data);
   }
 
