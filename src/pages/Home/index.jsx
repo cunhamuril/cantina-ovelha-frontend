@@ -8,33 +8,71 @@ import api from '../../services/api';
 const Home = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState(null);
 
   useEffect(() => {
-    loadData();
+    /**
+     * Render all restaurants data
+     */
+    async function renderData() {
+      setRestaurants(await loadData());
+      setLoading(false);
+    }
+
+    renderData();
   }, []);
 
+  /**
+   * Load all restaurants data
+   */
   async function loadData() {
     setLoading(true);
 
     try {
       const req = await api.get('/restaurants');
-      setRestaurants(req.data);
-      setLoading(false);
+      return req.data;
     } catch (error) {
-      console.error(error);
+      return console.error(error);
     }
+  }
+
+  /**
+   * Load filtered restaurants data
+   * @param {Event} e form event
+   */
+  async function handleSearch(e) {
+    setSearch(e.target.value);
+    e.preventDefault();
+
+    const data = await loadData();
+
+    if (!search || search === '') {
+      setRestaurants(data);
+    } else {
+      const filteredRestaurants = data.filter(restaurant => {
+        return restaurant.name.indexOf(search) !== -1;
+      });
+
+      setRestaurants(filteredRestaurants);
+    }
+
+    setLoading(false);
   }
 
   return (
     <div className="home">
       <h2 className="mt-5 d-flex justify-content-center text-center">
-        Bem-vindo ao Lista Rango
+        <a href="/" style={{ textDecoration: 'none', color: '#000' }}>
+          Bem-vindo ao Lista Rango
+        </a>
       </h2>
       <Container className="d-flex align-items-center justify-content-center mt-4">
         <div className="w-100 px-md-5 mx-md-5">
           <SearchField
             textLabel="Buscar estabelecimento"
             backgroundColor="#FBFBFB"
+            onChange={handleSearch}
+            onSubmit={handleSearch}
           />
         </div>
       </Container>
@@ -44,13 +82,17 @@ const Home = () => {
       >
         {loading ? (
           <Spinner size="lg" color="info" />
-        ) : (
+        ) : restaurants.length > 0 ? (
           restaurants.map(restaurant => (
             <RestaurantCard
               restaurant={restaurant}
               key={restaurant.id_restaurant}
             />
           ))
+        ) : (
+          <h4 className="text-muted mt-5">
+            Nenhum item corresponde a pesquisa
+          </h4>
         )}
       </Container>
     </div>

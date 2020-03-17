@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import media from 'styled-media-query';
 
-export const SearchContainer = styled.div`
+export const SearchForm = styled.form`
   /* Box Model */
   max-width: 100%;
   border-radius: 25px;
@@ -50,8 +50,9 @@ export const SearchInput = styled.input`
   `}
 `;
 
-export const SearchIcon = styled.div`
+export const SearchButton = styled.button`
   width: 7%;
+  border: none;
   padding: 11px;
   border-radius: 0 25px 25px 0;
 
@@ -60,6 +61,10 @@ export const SearchIcon = styled.div`
 
   &:active {
     transform: scale(0.9);
+  }
+
+  &:focus {
+    outline: none;
   }
 
   ${media.lessThan('large')`    
