@@ -13,18 +13,10 @@ const RestaurantCard = ({ restaurant }) => {
   useEffect(() => {
     // Load address data
     function loadAddress() {
-      if (
-        restaurant.address &&
-        Array.isArray(restaurant.address) &&
-        restaurant.address.length > 0
-      ) {
-        const { number, street, district, city, state } = restaurant.address[0];
-        setAddress(
-          `${street}, ${number || 'S/N'}, ${district}, ${city}-${state}`
-        );
-      } else {
-        setAddress(null);
-      }
+      const { number, street, district, city, state } = restaurant.address[0];
+      setAddress(
+        `${street}, ${number || 'S/N'}, ${district}, ${city}-${state}`
+      );
     }
 
     loadAddress();
@@ -59,9 +51,9 @@ const RestaurantCard = ({ restaurant }) => {
           <small
             className="restaurant-address text-muted"
             style={{ maxHeight: 20, whiteSpace: 'nowrap' }}
-            title={address && address}
+            title={address}
           >
-            {address || 'Sem endereço'}
+            {address}
           </small>
         </div>
       </Card>
