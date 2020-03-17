@@ -1,92 +1,78 @@
-import React from 'react';
-import { Container } from 'reactstrap';
+import React, { useState, useEffect } from 'react';
+import { Container, Spinner } from 'reactstrap';
 
 import SearchField from '../../components/SearchField';
 import RestaurantCard from './components/RestaurantCard';
 
-import RestaurantLogo from '../../assets/images/restaurant-logo.png'; // TEMP
-
+import api from '../../services/api';
 const Home = () => {
+  const [restaurants, setRestaurants] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState(null);
+
+  useEffect(() => {
+    /**
+     * Render all restaurants data
+     */
+    async function renderData() {
+      setRestaurants(await loadData());
+      setLoading(false);
+    }
+
+    renderData();
+  }, []);
+
   /**
-   * TEMP
+   * Load all restaurants data
    */
-  const restaurants = [
-    {
-      key: 1,
-      name: 'Nome do restaurante Nome do restaurante',
-      address:
-        'Endereço do restaurante Endereço do restaurante Endereço do restaurante Endereço do restaurante',
-      isOpen: true,
-      logo: RestaurantLogo,
-    },
-    {
-      key: 2,
-      name: 'Nome do restaurante',
-      address: 'Endereço do restaurante',
-      isOpen: true,
-      logo: RestaurantLogo,
-    },
-    {
-      key: 3,
-      name: 'Nome do restaurante',
-      address: 'Endereço do restaurante',
-      isOpen: true,
-      logo: RestaurantLogo,
-    },
-    {
-      key: 4,
-      name: 'Nome do restaurante',
-      address: 'Endereço do restaurante',
-      isOpen: false,
-      logo: RestaurantLogo,
-    },
-    {
-      key: 5,
-      name: 'Nome do restaurante',
-      address: 'Endereço do restaurante',
-      isOpen: false,
-      logo: RestaurantLogo,
-    },
-    {
-      key: 6,
-      name: 'Nome do restaurante',
-      address: 'Endereço do restaurante',
-      isOpen: true,
-      logo: RestaurantLogo,
-    },
-    {
-      key: 7,
-      name: 'Nome do restaurante',
-      address: 'Endereço do restaurante',
-      isOpen: false,
-      logo: RestaurantLogo,
-    },
-    {
-      key: 8,
-      name: 'Nome do restaurante',
-      address: 'Endereço do restaurante',
-      isOpen: false,
-      logo: RestaurantLogo,
-    },
-    {
-      key: 9,
-      name: 'Nome do restaurante',
-      address: 'Endereço do restaurante',
-      isOpen: true,
-      logo: RestaurantLogo,
-    },
-  ];
+  async function loadData() {
+    setLoading(true);
+
+    try {
+      const req = await api.get('/restaurants');
+      return req.data;
+    } catch (error) {
+      return console.error(error);
+    }
+  }
+
+  /**
+   * Load filtered restaurants data
+   * @param {Event} e form event
+   */
+  async function handleSearch(e) {
+    setSearch(e.target.value);
+    e.preventDefault();
+
+    const data = await loadData();
+
+    if (!search || search === '') {
+      setRestaurants(data);
+    } else {
+      const filteredRestaurants = data.filter(restaurant => {
+        return restaurant.name.indexOf(search) !== -1;
+      });
+
+      setRestaurants(filteredRestaurants);
+    }
+
+    setLoading(false);
+  }
 
   return (
     <div className="home">
       <h2 className="mt-5 d-flex justify-content-center text-center">
-        Bem-vindo ao Lista Rango
+        <a href="/" style={{ textDecoration: 'none', color: '#000' }}>
+          Bem-vindo ao Lista Rango
+        </a>
       </h2>
       <Container className="d-flex align-items-center justify-content-center mt-4">
         <div className="w-100 px-md-5 mx-md-5">
           <SearchField
             textLabel="Buscar estabelecimento"
             backgroundColor="#FBFBFB"
+            onChange={handleSearch}
+            onSubmit={handleSearch}
           />
         </div>
       </Container>
@@ -94,9 +80,20 @@ const Home = () => {
         fluid
         className="d-flex align-items-center justify-content-center flex-wrap mt-5"
       >
-        {restaurants.map(restaurant => (
-          <RestaurantCard restaurant={restaurant} key={restaurant.key} />
-        ))}
+        {loading ? (
+          <Spinner size="lg" color="info" />
+        ) : restaurants.length > 0 ? (
+          restaurants.map(restaurant => (
+            <RestaurantCard
+              restaurant={restaurant}
+              key={restaurant.id_restaurant}
+            />
+          ))
+        ) : (
+          <h4 className="text-muted mt-5">
+            Nenhum item corresponde a pesquisa
+          </h4>
+        )}
       </Container>
     </div>
   );

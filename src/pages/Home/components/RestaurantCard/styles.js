@@ -5,8 +5,8 @@ import { darken } from '../../../../theme/colors';
 
 export const Card = styled.div`
   /* Box Model */
-  max-width: 367px;
-  min-height: 100px;
+  width: 367px;
+  height: 100px;
   border-radius: 4px;
 
   /* Other */
@@ -29,6 +29,8 @@ export const Card = styled.div`
   }
 
   ${media.lessThan('small')`
+    width: 320px;    
+
     div > h5,
     div > small {
       max-width: 160px;
