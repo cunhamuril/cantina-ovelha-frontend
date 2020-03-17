@@ -10,8 +10,12 @@ const DishImage =
   'https://img.itdg.com.br/tdg/images/blog/uploads/2019/06/prato-vegetariano-equilibrado.jpg';
 
 const ProductModal = ({ isOpen, toggle, product, price }) => {
-  const [priceCount, setPriceCount] = useState(price);
+  const [totalPrice, setTotalPrice] = useState(price);
   const [counter, setCounter] = useState(1);
+
+  useEffect(() => {
+    setTotalPrice(price * counter);
+  }, [counter, price]);
 
   /**
    * Counter
@@ -25,10 +29,6 @@ const ProductModal = ({ isOpen, toggle, product, price }) => {
       setCounter(counter - 1);
     }
   };
-
-  useEffect(() => {
-    setPriceCount(price * counter);
-  }, [counter, price]);
 
   const closeBtn = (
     <CloseBtn onClick={toggle}>
@@ -78,7 +78,7 @@ const ProductModal = ({ isOpen, toggle, product, price }) => {
           onClick={toggle}
         >
           <span>Adicionar</span>
-          <span>{`R$ ${priceCount
+          <span>{`R$ ${totalPrice
             .toFixed(2)
             .toString()
             .replace('.', ',')}`}</span>
