@@ -43,7 +43,11 @@ const RestaurantCard = ({ restaurant }) => {
         <div style={{ maxWidth: 100, maxHeight: 100 }}>
           <Thumbnail
             style={{
-              backgroundImage: `url(${restaurant.logo || DefaultImage})`,
+              backgroundImage: `url(${
+                restaurant.picture
+                  ? 'http://' + restaurant.picture.url // TEMP
+                  : DefaultImage
+              })`,
             }}
           />
         </div>

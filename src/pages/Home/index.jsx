@@ -4,6 +4,8 @@ import { Container, Spinner } from 'reactstrap';
 import SearchField from '../../components/SearchField';
 import RestaurantCard from './components/RestaurantCard';
 
+import { darken } from '../../theme/colors';
+
 import api from '../../services/api';
 const Home = () => {
   const [restaurants, setRestaurants] = useState([]);
@@ -62,7 +64,7 @@ const Home = () => {
   return (
     <div className="home">
       <h2 className="mt-5 d-flex justify-content-center text-center">
-        <a href="/" style={{ textDecoration: 'none', color: '#000' }}>
+        <a href="/" style={{ textDecoration: 'none', color: darken }}>
           Bem-vindo ao Lista Rango
         </a>
       </h2>
