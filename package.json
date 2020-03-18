@@ -8,6 +8,8 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
+    "date-fns": "^2.11.0",
+    "date-fns-tz": "^1.0.10",
     "prop-types": "^15.7.2",
     "react": "^16.13.0",
     "react-accessible-accordion": "^3.0.1",

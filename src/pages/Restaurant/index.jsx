@@ -1,5 +1,7 @@
-import React from 'react';
-import { Container } from 'reactstrap';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
+import { Container, Spinner } from 'reactstrap';
 import { Accordion } from 'react-accessible-accordion';
 
 import BackButton from '../../components/BackButton';
@@ -8,236 +10,105 @@ import Header from './components/Header';
 import ProductCard from './components/ProductCard';
 import CategoryAccordionItem from './components/CategoryAccordionItem';
 
-/**
- * TEMP
- */
-import DishThumbnail from '../../assets/images/dish.png';
-import RestaurantLogo from '../../assets/images/restaurant-logo-md.png';
+import api from '../../services/api';
 
 import { Main } from './styles';
 import { lightGray } from '../../theme/colors';
 import 'react-accessible-accordion/dist/fancy-example.css';
 
-const Restaurant = () => {
+import RestaurantMock from '../../temp/restaurantMock'; // TEMP
+
+const Restaurant = ({ match }) => {
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
+  const [restaurant, setRestaurant] = useState({});
+
+  const { id } = match.params;
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const res = await api.get(`/restaurants/${id}`);
+
+        if (!res.data) {
+          return setNotFound(true);
+        }
+
+        setRestaurant(res.data);
+      } catch (error) {
+        console.error(error);
+      }
+      setLoading(false);
+    }
+
+    loadData();
+  }, [id]);
+
   /**
-   * TEMP
+   * Scroll to top of page
    */
-  const restaurant = {
-    name: 'Nome do Restaurante',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    weekday: '11:30 às 15:00',
-    weekend: '11:30 às 22:00',
-    holiday: '11:30 às 15:00',
-    logo: RestaurantLogo,
-    categories: [
-      {
-        key: 1,
-        name: 'Almoço',
-        products: [
-          {
-            key: 1,
-            name: 'Nome do Prato',
-            thumbnail: DishThumbnail,
-            description:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
-            price: 19.9,
-            promotional_price: 10,
-          },
-          {
-            key: 2,
-            name: 'Nome do Prato',
-            thumbnail: DishThumbnail,
-            description:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
-            price: 19.9,
-            promotional_price: null,
-          },
-          {
-            key: 3,
-            name: 'Nome do Prato',
-            thumbnail: DishThumbnail,
-            description:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
-            price: 19.9,
-            promotional_price: null,
-          },
-          {
-            key: 4,
-            name: 'Nome do Prato',
-            thumbnail: DishThumbnail,
-            description:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
-            price: 25.99,
-            promotional_price: 19.9,
-          },
-        ],
-      },
-      {
-        key: 2,
-        name: 'Bebidas',
-        products: [
-          {
-            key: 1,
-            name: 'Nome do Prato',
-            thumbnail: DishThumbnail,
-            description:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
-            price: 19.9,
-            promotional_price: null,
-          },
-          {
-            key: 2,
-            name: 'Nome do Prato',
-            thumbnail: DishThumbnail,
-            description:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
-            price: 19.9,
-            promotional_price: 11.22,
-          },
-          {
-            key: 3,
-            name: 'Nome do Prato',
-            thumbnail: DishThumbnail,
-            description:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
-            price: 19.9,
-            promotional_price: null,
-          },
-          {
-            key: 4,
-            name: 'Nome do Prato',
-            thumbnail: DishThumbnail,
-            description:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
-            price: 19.9,
-            promotional_price: 19.9,
-          },
-        ],
-      },
-      {
-        key: 3,
-        name: 'Sobremesas',
-        products: [
-          {
-            key: 1,
-            name: 'Nome do Prato',
-            thumbnail: DishThumbnail,
-            description:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
-            price: 19.9,
-            promotional_price: null,
-          },
-          {
-            key: 2,
-            name: 'Nome do Prato',
-            thumbnail: DishThumbnail,
-            description:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
-            price: 19.9,
-            promotional_price: null,
-          },
-          {
-            key: 3,
-            name: 'Nome do Prato',
-            thumbnail: DishThumbnail,
-            description:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
-            price: 19.9,
-            promotional_price: null,
-          },
-          {
-            key: 4,
-            name: 'Nome do Prato',
-            thumbnail: DishThumbnail,
-            description:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
-            price: 19.9,
-            promotional_price: 19.9,
-          },
-        ],
-      },
-      {
-        key: 4,
-        name: 'Acompanhamentos',
-        products: [
-          {
-            key: 1,
-            name: 'Nome do Prato',
-            thumbnail: DishThumbnail,
-            description:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
-            price: 19.9,
-            promotional_price: null,
-          },
-          {
-            key: 2,
-            name: 'Nome do Prato',
-            thumbnail: DishThumbnail,
-            description:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
-            price: 19.9,
-            promotional_price: null,
-          },
-          {
-            key: 3,
-            name: 'Nome do Prato',
-            thumbnail: DishThumbnail,
-            description:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
-            price: 19.9,
-            promotional_price: null,
-          },
-          {
-            key: 4,
-            name: 'Nome do Prato',
-            thumbnail: DishThumbnail,
-            description:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do',
-            price: 19.9,
-            promotional_price: 19.9,
-          },
-        ],
-      },
-    ],
-  };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-  return (
+  function handleSearch() {}
+
+  return notFound ? (
+    <Redirect to="/" />
+  ) : (
     <Container fluid className="mt-4">
-      <div className="mx-md-5">
+      <Container fluid>
         <BackButton />
-        <Header restaurant={restaurant} />
+      </Container>
+      {loading ? (
+        <center>
+          <Spinner size="lg" color="info" />
+        </center>
+      ) : (
+        <div className="mx-md-5">
+          <Header restaurant={restaurant} />
 
-        <Main className="mt-5">
-          <div className="content mr-md-5">
-            <SearchField
-              backgroundColor={lightGray}
-              textLabel="Buscar no cardápio"
-            />
+          <Main className="mt-5">
+            <div className="content mr-md-5">
+              <SearchField
+                backgroundColor={lightGray}
+                textLabel="Buscar no cardápio"
+                onChange={handleSearch}
+                onSubmit={handleSearch}
+              />
 
-            <Accordion
-              className="mt-5"
-              allowMultipleExpanded={true}
-              allowZeroExpanded={true}
-            >
-              {restaurant.categories.map(category => (
-                <CategoryAccordionItem key={category.key} category={category}>
-                  {category.products.map(product => (
-                    <ProductCard
-                      category={category}
-                      product={product}
-                      key={product.key}
-                    />
-                  ))}
-                </CategoryAccordionItem>
-              ))}
-            </Accordion>
-          </div>
-          <div className="menu" />
-        </Main>
-      </div>
+              <Accordion
+                className="mt-5"
+                allowMultipleExpanded={true}
+                allowZeroExpanded={true}
+              >
+                {RestaurantMock.categories.map(category => (
+                  <CategoryAccordionItem key={category.key} category={category}>
+                    {category.products.map(product => (
+                      <ProductCard
+                        category={category}
+                        product={product}
+                        key={product.key}
+                      />
+                    ))}
+                  </CategoryAccordionItem>
+                ))}
+              </Accordion>
+            </div>
+            <div className="menu" />
+          </Main>
+        </div>
+      )}
     </Container>
   );
+};
+
+Restaurant.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }),
+  }),
 };
 
 export default Restaurant;

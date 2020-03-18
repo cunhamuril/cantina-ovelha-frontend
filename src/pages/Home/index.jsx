@@ -31,8 +31,8 @@ const Home = () => {
     setLoading(true);
 
     try {
-      const req = await api.get('/restaurants');
-      return req.data;
+      const res = await api.get('/restaurants');
+      return res.data;
     } catch (error) {
       return console.error(error);
     }
