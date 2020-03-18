@@ -56,6 +56,7 @@ export const Counter = styled.div`
 
 export const CloseBtn = styled.button`
   /* Display */
+  z-index: 9;
   position: absolute;
   transform: translate(575px, -25px);
 
