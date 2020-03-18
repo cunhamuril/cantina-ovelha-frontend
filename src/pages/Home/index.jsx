@@ -9,7 +9,7 @@ import { darken } from '../../theme/colors';
 import api from '../../services/api';
 const Home = () => {
   const [restaurants, setRestaurants] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState(null);
 
   useEffect(() => {
@@ -28,8 +28,6 @@ const Home = () => {
    * Load all restaurants data
    */
   async function loadData() {
-    setLoading(true);
-
     try {
       const req = await api.get('/restaurants');
       return req.data;
@@ -57,8 +55,6 @@ const Home = () => {
 
       setRestaurants(filteredRestaurants);
     }
-
-    setLoading(false);
   }
 
   return (
