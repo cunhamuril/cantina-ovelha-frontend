@@ -7,7 +7,7 @@ import defaultImage from '../../../../assets/images/default.jpg';
 
 import { Container, Thumbnail } from './styles';
 
-const Header = ({ restaurant }) => {
+const ProductHeader = ({ restaurant }) => {
   const [formattedTime, setFormattedTime] = useState('');
   const [formattedAddress, setFormattedAddress] = useState('Sem endereço');
   const [logo, setLogo] = useState(defaultImage);
@@ -20,7 +20,7 @@ const Header = ({ restaurant }) => {
      */
     function formatData() {
       if (picture) {
-        setLogo('http://' + picture.url);
+        setLogo('http://' + picture.url); // "http://" TEMP
       }
 
       if (address) {
@@ -72,8 +72,8 @@ const Header = ({ restaurant }) => {
   );
 };
 
-Header.propTypes = {
+ProductHeader.propTypes = {
   restaurant: PropTypes.object.isRequired,
 };
 
-export default Header;
+export default ProductHeader;

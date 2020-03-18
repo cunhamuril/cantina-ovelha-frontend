@@ -6,7 +6,7 @@ import { Accordion } from 'react-accessible-accordion';
 
 import BackButton from '../../components/BackButton';
 import SearchField from '../../components/SearchField';
-import Header from './components/Header';
+import ProductHeader from './components/ProductHeader';
 import ProductCard from './components/ProductCard';
 import CategoryAccordionItem from './components/CategoryAccordionItem';
 
@@ -16,7 +16,8 @@ import { Main } from './styles';
 import { lightGray } from '../../theme/colors';
 import 'react-accessible-accordion/dist/fancy-example.css';
 
-import RestaurantMock from '../../temp/restaurantMock'; // TEMP
+// TEMP
+import RestaurantMock from '../../temp/restaurantMock';
 
 const Restaurant = ({ match }) => {
   const [loading, setLoading] = useState(true);
@@ -66,7 +67,7 @@ const Restaurant = ({ match }) => {
         </center>
       ) : (
         <div className="mx-md-5">
-          <Header restaurant={restaurant} />
+          <ProductHeader restaurant={restaurant} />
 
           <Main className="mt-5">
             <div className="content mr-md-5">
