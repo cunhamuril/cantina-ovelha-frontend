@@ -44,9 +44,7 @@ const RestaurantCard = ({ restaurant }) => {
           <Thumbnail
             style={{
               backgroundImage: `url(${
-                restaurant.picture
-                  ? 'http://' + restaurant.picture.url // TEMP
-                  : DefaultImage
+                restaurant.picture ? restaurant.picture.url : DefaultImage
               })`,
             }}
           />

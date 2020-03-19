@@ -20,7 +20,7 @@ const ProductHeader = ({ restaurant }) => {
      */
     function formatData() {
       if (picture) {
-        setLogo('http://' + picture.url); // "http://" TEMP
+        setLogo(picture.url);
       }
 
       if (address) {

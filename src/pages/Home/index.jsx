@@ -80,7 +80,7 @@ const Home = () => {
       >
         {loading ? (
           <Spinner size="lg" color="info" />
-        ) : restaurants.length > 0 ? (
+        ) : restaurants && restaurants.length > 0 ? (
           restaurants.map(restaurant => (
             <RestaurantCard
               restaurant={restaurant}
