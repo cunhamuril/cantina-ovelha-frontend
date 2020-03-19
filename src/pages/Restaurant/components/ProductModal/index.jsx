@@ -5,10 +5,6 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import { Thumbnail, ProductContent, Counter, AddBtn, CloseBtn } from './styles';
 
-// TEMP
-const DishImage =
-  'https://img.itdg.com.br/tdg/images/blog/uploads/2019/06/prato-vegetariano-equilibrado.jpg';
-
 const ProductModal = ({ isOpen, toggle, product, price }) => {
   const [totalPrice, setTotalPrice] = useState(price);
   const [counter, setCounter] = useState(1);
@@ -46,7 +42,7 @@ const ProductModal = ({ isOpen, toggle, product, price }) => {
     >
       <ModalHeader toggle={toggle} close={closeBtn} className="border-0 p-0" />
       <ModalBody className="d-flex flex-column align-items-center">
-        <Thumbnail style={{ backgroundImage: `url(${DishImage})` }} />
+        <Thumbnail style={{ backgroundImage: `url(${product.thumbnail})` }} />
         <ProductContent className="mt-5 d-flex align-items-center flex-wrap">
           <div className="product-info col-lg-6 col-sm-12">
             <h2>{product.name}</h2>

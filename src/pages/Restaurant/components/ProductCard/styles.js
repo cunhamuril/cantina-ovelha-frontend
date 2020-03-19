@@ -59,13 +59,13 @@ export const Thumbnail = styled.div`
 
 export const Promo = styled.div`
   /* Display */
-  transform: translate(30px, 5px);
+  position: absolute;
+  transform: translate(150px, 5px);
 
   /* Box Model */
   max-width: 103px;
-  max-height: 21px;
-  padding: 0 10px;
-  border-radius: 15px;
+  padding: 3px 10px;
+  border-radius: 25px;
 
   /* Other */
   color: #fff;
@@ -84,7 +84,9 @@ export const Promo = styled.div`
   }
 
   ${media.lessThan('small')`
-    transform: translateX(10px);    
+  transform: translate(180px, 5px);
+
+  padding: 8px;
 
     p{
       display: none;    

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FaAward } from 'react-icons/fa';
 
@@ -8,28 +8,38 @@ import { Container, Thumbnail, Promo } from './styles';
 
 const ProductCard = ({ product, category }) => {
   const [modal, setModal] = useState(false);
+  const [formattedPrice, setFormattedPrice] = useState({});
+
+  useEffect(() => {
+    /**
+     * Format price and promotional price
+     */
+    function formatPrice() {
+      if (product.promotional_price) {
+        setFormattedPrice({
+          price: product.price
+            .toFixed(2)
+            .toString()
+            .replace('.', ','),
+          promotionalPrice: product.promotional_price
+            .toFixed(2)
+            .toString()
+            .replace('.', ','),
+        });
+      } else {
+        setFormattedPrice({
+          price: product.price
+            .toFixed(2)
+            .toString()
+            .replace('.', ','),
+        });
+      }
+    }
+
+    formatPrice();
+  }, [product.price, product.promotional_price]);
 
   const toggleModal = () => setModal(!modal);
-
-  /**
-   * Prices
-   */
-  const price =
-    'R$ ' +
-    product.price
-      .toFixed(2)
-      .toString()
-      .replace('.', ',');
-
-  let promotionalPrice = null;
-  if (product.promotional_price) {
-    promotionalPrice =
-      'R$ ' +
-      product.promotional_price
-        .toFixed(2)
-        .toString()
-        .replace('.', ',');
-  }
 
   return (
     <Container
@@ -53,11 +63,13 @@ const ProductCard = ({ product, category }) => {
         <p className="description">{product.description}</p>
         <div className="prices">
           <span className="price">
-            {product.promotional_price ? promotionalPrice : price}
+            {product.promotional_price
+              ? formattedPrice.promotionalPrice
+              : formattedPrice.price}
           </span>
           {product.promotional_price && (
             <small className="promotional-price ml-2 text-muted">
-              <del>{price}</del>
+              <del>{formattedPrice.price}</del>
             </small>
           )}
         </div>
