@@ -15,23 +15,46 @@ const ProductCard = ({ product, category }) => {
      * Format price and promotional price
      */
     function formatPrice() {
-      if (product.promotional_price) {
+      if (product.price && product.promotional_price) {
         setFormattedPrice({
-          price: product.price
-            .toFixed(2)
-            .toString()
-            .replace('.', ','),
-          promotionalPrice: product.promotional_price
-            .toFixed(2)
-            .toString()
-            .replace('.', ','),
+          price:
+            'R$ ' +
+            product.price
+              .toFixed(2)
+              .toString()
+              .replace('.', ','),
+          promotionalPrice:
+            'R$ ' +
+            product.promotional_price
+              .toFixed(2)
+              .toString()
+              .replace('.', ','),
         });
-      } else {
+      } else if (product.price) {
         setFormattedPrice({
-          price: product.price
-            .toFixed(2)
-            .toString()
-            .replace('.', ','),
+          price:
+            'R$ ' +
+            product.price
+              .toFixed(2)
+              .toString()
+              .replace('.', ','),
+        });
+      }
+      // TEMP
+      else {
+        setFormattedPrice({
+          price:
+            'R$ ' +
+            (9.99)
+              .toFixed(2)
+              .toString()
+              .replace('.', ','),
+          promotionalPrice:
+            'R$ ' +
+            (5.99)
+              .toFixed(2)
+              .toString()
+              .replace('.', ','),
         });
       }
     }
@@ -47,27 +70,30 @@ const ProductCard = ({ product, category }) => {
       className="d-flex align-items-center"
       onClick={toggleModal}
     >
-      <Thumbnail style={{ backgroundImage: `url(${product.thumbnail})` }} />
+      <Thumbnail style={{ backgroundImage: `url(${product.picture.url})` }} />
       <div className="p-3">
         <div className="d-flex justify-content-between">
-          <h6 style={{ maxWidth: product.promotional_price ? 124 : 200 }}>
+          <h6 style={{ maxWidth: formattedPrice.promotionalPrice ? 124 : 200 }}>
             {product.name}
           </h6>
-          {product.promotional_price && (
+          {formattedPrice.promotionalPrice && (
             <Promo className="d-flex align-items-center justify-content-center">
               <FaAward size="13" className="icon" />
-              <p className="m-0">{'Promo ' + category.name}</p>
+              <p className="m-0">{'Promo ' + category.description}</p>
             </Promo>
           )}
         </div>
-        <p className="description">{product.description}</p>
+        <p className="description">
+          {product.description ||
+            'Lorem ipsum dolor sit amet consectetur adipisicing elit.'}
+        </p>
         <div className="prices">
           <span className="price">
-            {product.promotional_price
+            {formattedPrice.promotionalPrice
               ? formattedPrice.promotionalPrice
               : formattedPrice.price}
           </span>
-          {product.promotional_price && (
+          {formattedPrice.promotionalPrice && (
             <small className="promotional-price ml-2 text-muted">
               <del>{formattedPrice.price}</del>
             </small>
@@ -80,7 +106,11 @@ const ProductCard = ({ product, category }) => {
         toggle={toggleModal}
         product={product}
         price={
-          product.promotional_price ? product.promotional_price : product.price
+          product.price
+            ? formattedPrice.promotionalPrice
+              ? formattedPrice.promotionalPrice
+              : product.price
+            : 5.99
         }
       />
     </Container>

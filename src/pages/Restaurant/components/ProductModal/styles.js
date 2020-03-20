@@ -47,6 +47,10 @@ export const Counter = styled.div`
   font-size: 22px;
   font-weight: 500;
 
+  span::selection {
+    background-color: transparent;
+  }
+
   .counter-btn {
     cursor: pointer;
     font-size: 40px;

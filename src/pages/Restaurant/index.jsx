@@ -17,22 +17,24 @@ import { lightGray } from '../../theme/colors';
 import 'react-accessible-accordion/dist/fancy-example.css';
 
 // TEMP
-import RestaurantMock from '../../temp/restaurantMock';
+// import RestaurantMock from '../../temp/restaurantMock';
 
 const Restaurant = ({ match }) => {
-  const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
+  const [pageNotFound, setPageNotFound] = useState(false);
   const [restaurant, setRestaurant] = useState({});
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  // const [search, setSearch] = useState('');
 
   const { id } = match.params;
 
   useEffect(() => {
-    async function loadData() {
+    async function loadRestaurantData() {
       try {
         const res = await api.get(`/restaurants/${id}`);
 
         if (!res.data) {
-          return setNotFound(true);
+          return setPageNotFound(true);
         }
 
         setRestaurant(res.data);
@@ -42,19 +44,43 @@ const Restaurant = ({ match }) => {
       setLoading(false);
     }
 
-    loadData();
+    loadRestaurantData();
   }, [id]);
 
+  useEffect(() => {
+    async function loadCategoriesData() {
+      try {
+        const res = await api.get('/categories');
+        if (res.data) setCategories(res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    loadCategoriesData();
+  }, []);
+
   /**
-   * Scroll to top of page
+   * Scroll to top of page when load this component
    */
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  function handleSearch() {}
+  function handleSearch(e) {
+    // setSearch(e.target.value);
+    e.preventDefault();
+  }
 
-  return notFound ? (
+  /**
+   * TEMP
+   */
+  console.log(categories);
+  /**
+   *
+   */
+
+  return pageNotFound ? (
     <Redirect to="/" />
   ) : (
     <Container fluid className="mt-4">
@@ -83,13 +109,16 @@ const Restaurant = ({ match }) => {
                 allowMultipleExpanded={true}
                 allowZeroExpanded={true}
               >
-                {RestaurantMock.categories.map(category => (
-                  <CategoryAccordionItem key={category.key} category={category}>
-                    {category.products.map(product => (
+                {categories.map(category => (
+                  <CategoryAccordionItem
+                    key={category.id_category}
+                    category={category}
+                  >
+                    {category.product.map(product => (
                       <ProductCard
                         category={category}
                         product={product}
-                        key={product.key}
+                        key={product.id_product}
                       />
                     ))}
                   </CategoryAccordionItem>

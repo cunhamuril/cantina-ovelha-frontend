@@ -10,7 +10,7 @@ import api from '../../services/api';
 const Home = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState(null);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     /**
@@ -46,7 +46,7 @@ const Home = () => {
 
     const data = await loadData();
 
-    if (!search || search === '') {
+    if (search === '') {
       setRestaurants(data);
     } else {
       const filteredRestaurants = data.filter(restaurant => {

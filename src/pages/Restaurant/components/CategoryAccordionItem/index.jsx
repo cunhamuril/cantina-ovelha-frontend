@@ -24,7 +24,7 @@ const CategoryAccordionItem = ({ category, children }) => (
           justifyContent: 'space-between',
         }}
       >
-        <strong>{category.name}</strong>
+        <strong>{category.description}</strong>
       </AccordionItemButton>
     </AccordionItemHeading>
     <AccordionItemPanel className="px-0">
