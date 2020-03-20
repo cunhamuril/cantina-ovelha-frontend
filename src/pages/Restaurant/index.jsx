@@ -109,8 +109,7 @@ const Restaurant = ({ match }) => {
               <SearchField
                 backgroundColor={lightGray}
                 textLabel="Buscar no cardápio"
-                onChange={handleSearch}
-                onSubmit={handleSearch}
+                onSearch={handleSearch}
               />
 
               {isSearching ? (

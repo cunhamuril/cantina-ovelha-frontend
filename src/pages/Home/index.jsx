@@ -69,8 +69,7 @@ const Home = () => {
           <SearchField
             textLabel="Buscar estabelecimento"
             backgroundColor="#FBFBFB"
-            onChange={handleSearch}
-            onSubmit={handleSearch}
+            onSearch={handleSearch}
           />
         </div>
       </Container>
