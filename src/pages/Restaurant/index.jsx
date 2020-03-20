@@ -24,7 +24,10 @@ const Restaurant = ({ match }) => {
   const [restaurant, setRestaurant] = useState({});
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-  // const [search, setSearch] = useState('');
+
+  const [searchValue, setSearchValue] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   const { id } = match.params;
 
@@ -67,18 +70,24 @@ const Restaurant = ({ match }) => {
     window.scrollTo(0, 0);
   }, []);
 
-  function handleSearch(e) {
-    // setSearch(e.target.value);
+  async function handleSearch(e) {
+    setSearchValue(e.target.value);
     e.preventDefault();
-  }
 
-  /**
-   * TEMP
-   */
-  console.log(categories);
-  /**
-   *
-   */
+    const res = await api.get('/products');
+
+    if (searchValue && searchValue.length > 0) {
+      const filtered = res.data.filter(product => {
+        return product.name.indexOf(searchValue) !== -1;
+      });
+
+      setIsSearching(true);
+      setFilteredProducts(filtered);
+    } else {
+      setIsSearching(false);
+      setFilteredProducts([]);
+    }
+  }
 
   return pageNotFound ? (
     <Redirect to="/" />
@@ -104,26 +113,44 @@ const Restaurant = ({ match }) => {
                 onSubmit={handleSearch}
               />
 
-              <Accordion
-                className="mt-5"
-                allowMultipleExpanded={true}
-                allowZeroExpanded={true}
-              >
-                {categories.map(category => (
-                  <CategoryAccordionItem
-                    key={category.id_category}
-                    category={category}
-                  >
-                    {category.product.map(product => (
+              {isSearching ? (
+                filteredProducts && filteredProducts.length > 0 ? (
+                  <div className="d-flex align-items-center justify-content-center flex-wrap mt-5">
+                    {filteredProducts.map(product => (
                       <ProductCard
-                        category={category}
-                        product={product}
                         key={product.id_product}
+                        category={product.category}
+                        product={product}
                       />
                     ))}
-                  </CategoryAccordionItem>
-                ))}
-              </Accordion>
+                  </div>
+                ) : (
+                  <h4 className="text-muted mt-5 text-center">
+                    Nenhum item corresponde a pesquisa
+                  </h4>
+                )
+              ) : (
+                <Accordion
+                  className="mt-5"
+                  allowMultipleExpanded={true}
+                  allowZeroExpanded={true}
+                >
+                  {categories.map(category => (
+                    <CategoryAccordionItem
+                      key={category.id_category}
+                      category={category}
+                    >
+                      {category.product.map(product => (
+                        <ProductCard
+                          key={product.id_product}
+                          category={category}
+                          product={product}
+                        />
+                      ))}
+                    </CategoryAccordionItem>
+                  ))}
+                </Accordion>
+              )}
             </div>
             <div className="menu" />
           </Main>
