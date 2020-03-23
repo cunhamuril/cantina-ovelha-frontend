@@ -4,6 +4,7 @@ import { FaTimes } from 'react-icons/fa';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import { Thumbnail, ProductContent, Counter, AddBtn, CloseBtn } from './styles';
+import defaultImage from '../../../../assets/images/default.jpg';
 
 const ProductModal = ({ isOpen, toggle, product, price }) => {
   const [totalPrice, setTotalPrice] = useState(price);
@@ -42,7 +43,13 @@ const ProductModal = ({ isOpen, toggle, product, price }) => {
     >
       <ModalHeader toggle={toggle} close={closeBtn} className="border-0 p-0" />
       <ModalBody className="d-flex flex-column align-items-center">
-        <Thumbnail style={{ backgroundImage: `url(${product.picture.url})` }} />
+        <Thumbnail
+          style={{
+            backgroundImage: `url(${
+              product.picture ? product.picture.url : defaultImage
+            })`,
+          }}
+        />
         <ProductContent className="mt-5 d-flex align-items-center flex-wrap">
           <div className="product-info col-md-8 col-sm-12">
             <h2>{product.name}</h2>

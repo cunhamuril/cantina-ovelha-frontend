@@ -6,7 +6,7 @@ import { Accordion } from 'react-accessible-accordion';
 
 import BackButton from '../../components/BackButton';
 import SearchField from '../../components/SearchField';
-import ProductHeader from './components/ProductHeader';
+import RestaurantHeader from './components/RestaurantHeader';
 import ProductCard from './components/ProductCard';
 import CategoryAccordionItem from './components/CategoryAccordionItem';
 
@@ -98,11 +98,11 @@ const Restaurant = ({ match }) => {
       </Container>
       {loading ? (
         <center>
-          <Spinner size="lg" color="info" />
+          <Spinner className="mt-5" size="lg" color="info" />
         </center>
       ) : (
         <div className="mx-md-5">
-          <ProductHeader restaurant={restaurant} />
+          <RestaurantHeader restaurant={restaurant} />
 
           <Main className="mt-5">
             <div className="content mr-md-5">

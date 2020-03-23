@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { parseISO, addHours } from 'date-fns';
-import { format } from 'date-fns-tz';
+// import { parseISO, addHours } from 'date-fns';
+// import { format } from 'date-fns-tz';
 import PropTypes from 'prop-types';
 
 import defaultImage from '../../../../assets/images/default.jpg';
 
 import { Container, Thumbnail } from './styles';
 
-const ProductHeader = ({ restaurant }) => {
+const RestaurantHeader = ({ restaurant }) => {
   const [formattedTime, setFormattedTime] = useState('');
   const [formattedAddress, setFormattedAddress] = useState('Sem endereço');
   const [logo, setLogo] = useState(defaultImage);
@@ -33,21 +33,21 @@ const ProductHeader = ({ restaurant }) => {
       if (schedule) {
         const { from, to } = schedule[0];
 
-        // From
-        const parsedFrom = parseISO(from);
-        const addedFrom = addHours(parsedFrom, 2);
-        const formattedFrom = format(addedFrom, 'HH:mm', {
-          timeZone: 'America/Sao_Paulo',
-        });
+        // // From
+        // const parsedFrom = parseISO(from);
+        // const addedFrom = addHours(parsedFrom, 2);
+        // const formattedFrom = format(addedFrom, 'HH:mm', {
+        //   timeZone: 'America/Sao_Paulo',
+        // });
 
-        // To
-        const parsedTo = parseISO(to);
-        const addedTo = addHours(parsedTo, 2);
-        const formattedTo = format(addedTo, 'HH:mm', {
-          timeZone: 'America/Sao_Paulo',
-        });
+        // // To
+        // const parsedTo = parseISO(to);
+        // const addedTo = addHours(parsedTo, 2);
+        // const formattedTo = format(addedTo, 'HH:mm', {
+        //   timeZone: 'America/Sao_Paulo',
+        // });
 
-        setFormattedTime(`${formattedFrom} às ${formattedTo}`);
+        setFormattedTime(`${from} às ${to}`);
       }
     }
 
@@ -72,8 +72,8 @@ const ProductHeader = ({ restaurant }) => {
   );
 };
 
-ProductHeader.propTypes = {
+RestaurantHeader.propTypes = {
   restaurant: PropTypes.object.isRequired,
 };
 
-export default ProductHeader;
+export default RestaurantHeader;

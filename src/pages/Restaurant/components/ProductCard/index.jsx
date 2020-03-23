@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FaAward } from 'react-icons/fa';
 
 import ProductModal from '../ProductModal';
+import defaultImage from '../../../../assets/images/default.jpg';
 
 import { Container, Thumbnail, Promo } from './styles';
 
@@ -70,7 +71,13 @@ const ProductCard = ({ product, category }) => {
       className="d-flex align-items-center"
       onClick={toggleModal}
     >
-      <Thumbnail style={{ backgroundImage: `url(${product.picture.url})` }} />
+      <Thumbnail
+        style={{
+          backgroundImage: `url(${
+            product.picture ? product.picture.url : defaultImage
+          })`,
+        }}
+      />
       <div className="p-3">
         <div className="d-flex justify-content-between">
           <h6 style={{ maxWidth: formattedPrice.promotionalPrice ? 124 : 200 }}>
@@ -83,10 +90,7 @@ const ProductCard = ({ product, category }) => {
             </Promo>
           )}
         </div>
-        <p className="description">
-          {product.description ||
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit.'}
-        </p>
+        <p className="description">{product.description}</p>
         <div className="prices">
           <span className="price">
             {formattedPrice.promotionalPrice
@@ -110,7 +114,7 @@ const ProductCard = ({ product, category }) => {
             ? formattedPrice.promotionalPrice
               ? formattedPrice.promotionalPrice
               : product.price
-            : 5.99
+            : 5.99 // TEMP
         }
       />
     </Container>
