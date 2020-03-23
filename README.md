@@ -1,68 +1,74 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Cantina do Ovelha - Frontend
 
-## Available Scripts
+Aplicativo de busca e consulta de restaurantes e cardápios. Com objetivo de consultar informações de endereços, horários de funcionamento e promoções do dia.
 
-In the project directory, you can run:
+Desenvolvido em [React](https://reactjs.org/) e consumindo [API](https://github.com/gabrielBFerreira/cantina-ovelha-backend/) desenvolvida em [Node.js](https://nodejs.org/)
 
-### `yarn start`
+## Sumário
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- [Workspaces](#workspaces)
+- [Bibliotecas Utilizadas](#bibliotecas-utilizadas)
+- [Desafios e Problemas](#desafios-e-problemas)
+- [Possíveis Melhorias](#possíveis-melhorias)
+- [Uso](#uso)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Workspaces
 
-### `yarn test`
+- [Commitizen](https://github.com/commitizen/cz-cli)
+- [Create React App](https://github.com/facebook/create-react-app).
+- [ESLint](https://eslint.org/)
+- [Gitflow](https://github.com/nvie/gitflow)
+- [Prettier](https://prettier.io/)
+- [Yarn](https://yarnpkg.com/)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Bibliotecas Utilizadas
 
-### `yarn build`
+- [Axios](https://github.com/axios/axios): requisições AJAX;
+- [Bootstrap](https://getbootstrap.com/): biblioteca de classes CSS;
+- [React Accessible Accordion](https://react-accessible-accordion.springload.co.nz/): componente accordion;
+- [React Icons](https://react-icons.netlify.com/): utilização de ícones no projeto;
+- [Reactstrap](https://reactstrap.github.io/): biblioteca Bootstrap para React de componentes estilizados;
+- [Styled Components](https://styled-components.com/): estilização de componentes escrito em JS;
+- [Styled Media Query](https://github.com/styled-components/styled-components): utilizado em conjunto com Styled Components, tem a função de padronizar tamanho de telas para responsividade com media queries.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Desafios e problemas
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+- **Cards**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  - Posicionar corretamente e responsivamente selos de avisos (restaurante aberto ou fechado, promoções de produtos).
 
-### `yarn eject`
+- **Sistema de busca**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+  - Desenvolver um sistema de busca performático e robusto.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **Modal**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+  - Desenvolver um modal exatamente como está no design e responsivo.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- **Horários**
+  - Problema em lidar com horários exatamente como pede no escopo: atualizar horário de funcionamento e promoções componente conforme o horário atual sem a necessidade de recarregar a página.
 
-## Learn More
+## Possíveis Melhorias
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **Performance**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  - Sistemas de horários;
+  - Sistemas de buscas.
 
-### Code Splitting
+- **Estrutura**
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+  - Organização de estilos com Styled Components, Bootstrap e CSS;
+  - Responsividade de cards e modais.
+  - Estrutura desta documentação.
 
-### Analyzing the Bundle Size
+- **Padrões**
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+  - Configurações do ESlint e Prettier;
+  - Organização de commits: como escrever commit corretamente e quando realizar commits;
+  - Documentação de componentes com [Storybook](https://storybook.js.org/).
 
-### Making a Progressive Web App
+## Uso
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- Executar `git clone git@github.com:cunhamuril/cantina-ovelha-frontend-murilo.git` para realizar o download do projeto;
+- Copiar tudo do arquivo `.env.example`, criar e colar tudo no arquivo arquivo `.env`;
+- Executar `yarn` ou `npm install` para instalar todas as dependências, depois executar `yarn start` ou `npm start`. O servidor de desenvolvimento deverá iniciar em https://localhost:3000.
