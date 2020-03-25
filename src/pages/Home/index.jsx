@@ -12,16 +12,27 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
 
+  /**
+   * Render all restaurants data
+   */
   useEffect(() => {
-    /**
-     * Render all restaurants data
-     */
     async function renderData() {
       setRestaurants(await loadData());
       setLoading(false);
     }
 
     renderData();
+  }, []);
+
+  /**
+   * Interval: every 15 minutes a new request is made
+   */
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      setRestaurants(await loadData());
+    }, 1000 * 60 * 15);
+
+    return () => clearInterval(interval);
   }, []);
 
   /**

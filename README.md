@@ -46,7 +46,7 @@ Desenvolvido em [React](https://reactjs.org/) e consumindo [API](https://github.
   - Desenvolver um modal exatamente como está no design e responsivo.
 
 - **Horários**
-  - Problema em lidar com horários exatamente como pede no escopo: atualizar horário de funcionamento e promoções componente conforme o horário atual sem a necessidade de recarregar a página.
+  - Dificuldade em lidar com horários exatamente como pede no escopo.
 
 ## Possíveis Melhorias
 
@@ -59,6 +59,7 @@ Desenvolvido em [React](https://reactjs.org/) e consumindo [API](https://github.
 
   - Organização de estilos com Styled Components, Bootstrap e CSS;
   - Responsividade de cards e modais.
+  - Sistemas de buscas.
   - Estrutura desta documentação.
 
 - **Padrões**
