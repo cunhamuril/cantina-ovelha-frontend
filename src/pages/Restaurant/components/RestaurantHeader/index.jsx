@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import { parseISO, addHours } from 'date-fns';
-// import { format } from 'date-fns-tz';
 import PropTypes from 'prop-types';
 
 import defaultImage from '../../../../assets/images/default.jpg';
@@ -32,20 +30,6 @@ const RestaurantHeader = ({ restaurant }) => {
 
       if (schedule) {
         const { from, to } = schedule[0];
-
-        // // From
-        // const parsedFrom = parseISO(from);
-        // const addedFrom = addHours(parsedFrom, 2);
-        // const formattedFrom = format(addedFrom, 'HH:mm', {
-        //   timeZone: 'America/Sao_Paulo',
-        // });
-
-        // // To
-        // const parsedTo = parseISO(to);
-        // const addedTo = addHours(parsedTo, 2);
-        // const formattedTo = format(addedTo, 'HH:mm', {
-        //   timeZone: 'America/Sao_Paulo',
-        // });
 
         setFormattedTime(`${from} às ${to}`);
       }
