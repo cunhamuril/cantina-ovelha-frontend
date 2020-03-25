@@ -8,57 +8,64 @@ import { primary, primaryLight } from '../../../../theme/colors';
 import { Card, Thumbnail, OpenInfo } from './styles';
 
 const RestaurantCard = ({ restaurant }) => {
-  const [address, setAddress] = useState('');
+  const [formattedAddress, setFormattedAddress] = useState('');
+  const [isRestaurantOpen, setIsRestaurantOpen] = useState(false);
+
+  // eslint-disable-next-line camelcase
+  const { id_restaurant, name, address, picture, schedule } = restaurant;
 
   useEffect(() => {
-    // Load address data
-    function loadAddress() {
-      const { number, street, district, city, state } = restaurant.address[0];
-      setAddress(
-        `${street}, ${number || 'S/N'}, ${district}, ${city}-${state}`
-      );
+    /**
+     * Format address and isOpen data
+     */
+    function formatData() {
+      if (address[0]) {
+        const { number, street, district, city, state } = address[0];
+        setFormattedAddress(
+          `${street}, ${number || 'S/N'}, ${district}, ${city}-${state}`
+        );
+      }
+
+      if (schedule[0]) {
+        setIsRestaurantOpen(schedule[0].isOpen);
+      }
     }
 
-    loadAddress();
-  }, [restaurant.address]);
+    formatData();
+  }, [address, schedule]);
 
   return (
     <Link
-      to={`/restaurants/${restaurant.id_restaurant}`}
+      // eslint-disable-next-line camelcase
+      to={`/restaurants/${id_restaurant}`}
       style={{ textDecoration: 'none' }}
     >
       <Card className="d-flex mb-5 mx-4">
         <OpenInfo
           className="d-flex align-items-center justify-content-center"
           style={{
-            backgroundColor: restaurant.schedule[0].isOpen
-              ? primary
-              : primaryLight,
+            backgroundColor: isRestaurantOpen ? primary : primaryLight,
           }}
         >
-          <small>
-            {restaurant.schedule[0].isOpen ? 'Aberto agora' : 'Fechado'}
-          </small>
+          <small>{isRestaurantOpen ? 'Aberto agora' : 'Fechado'}</small>
         </OpenInfo>
         <div style={{ maxWidth: 100, maxHeight: 100 }}>
           <Thumbnail
             style={{
-              backgroundImage: `url(${
-                restaurant.picture ? restaurant.picture.url : DefaultImage
-              })`,
+              backgroundImage: `url(${picture ? picture.url : DefaultImage})`,
             }}
           />
         </div>
         <div className="d-flex flex-column justify-content-center mx-4 w-100">
           <h5 className="m-0" style={{ maxHeight: 50 }}>
-            {restaurant.name}
+            {name}
           </h5>
           <small
             className="restaurant-address text-muted"
             style={{ maxHeight: 20, whiteSpace: 'nowrap' }}
-            title={address}
+            title={formattedAddress}
           >
-            {address}
+            {formattedAddress}
           </small>
         </div>
       </Card>
