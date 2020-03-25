@@ -61,21 +61,43 @@ const Restaurant = ({ match }) => {
   }, [id]);
 
   /**
-   * Load all categories and products
+   * Render all categories and products
    */
   useEffect(() => {
-    async function loadCategoriesData() {
-      try {
-        const res = await api.get('/categories');
-        if (res.data) setCategories(res.data);
-      } catch (error) {
-        console.error(error);
-      }
+    async function renderData() {
+      setCategories(await loadCategoriesData());
     }
 
-    loadCategoriesData();
+    renderData();
   }, []);
 
+  /**
+   * Interval: every 15 minutes a new request is made
+   */
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      setCategories(await loadCategoriesData());
+    }, 1000 * 60 * 15);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  /**
+   * Load all categories and products
+   */
+  async function loadCategoriesData() {
+    try {
+      const res = await api.get('/categories');
+      if (res.data) return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  /**
+   * Load filtered products data
+   * @param {Event} e form event
+   */
   async function handleSearch(e) {
     setSearchValue(e.target.value);
     e.preventDefault();
