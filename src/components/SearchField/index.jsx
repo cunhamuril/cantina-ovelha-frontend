@@ -4,14 +4,14 @@ import { MdSearch } from 'react-icons/md';
 
 import { SearchForm, SearchLabel, SearchInput, SearchButton } from './styles';
 
-const SearchField = ({ backgroundColor, textLabel, onSubmit, onChange }) => {
+const SearchField = ({ backgroundColor, textLabel, onSearch }) => {
   const searchInput = useRef();
 
   return (
     <SearchForm
       className="w-100 d-flex align-items-center justify-content-center"
       style={{ backgroundColor }}
-      onSubmit={onSubmit}
+      onSubmit={onSearch}
     >
       <SearchLabel onClick={() => searchInput.current.focus()}>
         {textLabel}
@@ -20,7 +20,7 @@ const SearchField = ({ backgroundColor, textLabel, onSubmit, onChange }) => {
       <SearchInput
         placeholder={textLabel}
         ref={searchInput}
-        onChange={onChange}
+        onChange={onSearch}
       />
 
       <SearchButton type="submit">
@@ -33,8 +33,7 @@ const SearchField = ({ backgroundColor, textLabel, onSubmit, onChange }) => {
 SearchField.propTypes = {
   backgroundColor: PropTypes.string.isRequired,
   textLabel: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onSearch: PropTypes.func.isRequired,
 };
 
 export default SearchField;

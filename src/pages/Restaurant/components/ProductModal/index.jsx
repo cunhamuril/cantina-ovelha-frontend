@@ -4,10 +4,7 @@ import { FaTimes } from 'react-icons/fa';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import { Thumbnail, ProductContent, Counter, AddBtn, CloseBtn } from './styles';
-
-// TEMP
-const DishImage =
-  'https://img.itdg.com.br/tdg/images/blog/uploads/2019/06/prato-vegetariano-equilibrado.jpg';
+import defaultImage from '../../../../assets/images/default.jpg';
 
 const ProductModal = ({ isOpen, toggle, product, price }) => {
   const [totalPrice, setTotalPrice] = useState(price);
@@ -46,13 +43,22 @@ const ProductModal = ({ isOpen, toggle, product, price }) => {
     >
       <ModalHeader toggle={toggle} close={closeBtn} className="border-0 p-0" />
       <ModalBody className="d-flex flex-column align-items-center">
-        <Thumbnail style={{ backgroundImage: `url(${DishImage})` }} />
+        <Thumbnail
+          style={{
+            backgroundImage: `url(${
+              product.picture ? product.picture.url : defaultImage
+            })`,
+          }}
+        />
         <ProductContent className="mt-5 d-flex align-items-center flex-wrap">
-          <div className="product-info col-lg-6 col-sm-12">
+          <div className="product-info col-md-8 col-sm-12">
             <h2>{product.name}</h2>
-            <p>{product.description}</p>
+            <p>
+              {product.description ||
+                'Lorem ipsum dolor sit amet consectetur adipisicing elit.'}
+            </p>
           </div>
-          <div className="product-price align-self-end col-lg-6 col-sm-12">
+          <div className="product-price align-self-end col-md-4 col-sm-12">
             <h1>
               {`R$ ${price
                 .toFixed(2)

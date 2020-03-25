@@ -10,7 +10,7 @@ import api from '../../services/api';
 const Home = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState(null);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     /**
@@ -29,8 +29,8 @@ const Home = () => {
    */
   async function loadData() {
     try {
-      const req = await api.get('/restaurants');
-      return req.data;
+      const res = await api.get('/restaurants');
+      return res.data;
     } catch (error) {
       return console.error(error);
     }
@@ -46,7 +46,7 @@ const Home = () => {
 
     const data = await loadData();
 
-    if (!search || search === '') {
+    if (search === '') {
       setRestaurants(data);
     } else {
       const filteredRestaurants = data.filter(restaurant => {
@@ -69,8 +69,7 @@ const Home = () => {
           <SearchField
             textLabel="Buscar estabelecimento"
             backgroundColor="#FBFBFB"
-            onChange={handleSearch}
-            onSubmit={handleSearch}
+            onSearch={handleSearch}
           />
         </div>
       </Container>
@@ -80,7 +79,7 @@ const Home = () => {
       >
         {loading ? (
           <Spinner size="lg" color="info" />
-        ) : restaurants.length > 0 ? (
+        ) : restaurants && restaurants.length > 0 ? (
           restaurants.map(restaurant => (
             <RestaurantCard
               restaurant={restaurant}
