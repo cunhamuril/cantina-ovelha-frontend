@@ -31,6 +31,16 @@ const Restaurant = ({ match }) => {
 
   const { id } = match.params;
 
+  /**
+   * Scroll to top when load page
+   */
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  /**
+   * Load restaurant data
+   */
   useEffect(() => {
     async function loadRestaurantData() {
       try {
@@ -50,6 +60,9 @@ const Restaurant = ({ match }) => {
     loadRestaurantData();
   }, [id]);
 
+  /**
+   * Load all categories and products
+   */
   useEffect(() => {
     async function loadCategoriesData() {
       try {
@@ -63,27 +76,38 @@ const Restaurant = ({ match }) => {
     loadCategoriesData();
   }, []);
 
-  /**
-   * Scroll to top of page when load this component
-   */
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   async function handleSearch(e) {
     setSearchValue(e.target.value);
     e.preventDefault();
 
-    const res = await api.get('/products');
-
     if (searchValue && searchValue.length > 0) {
+      const res = await api.get('/products');
       const filtered = res.data.filter(product => {
         return product.name.indexOf(searchValue) !== -1;
       });
 
-      setIsSearching(true);
-      setFilteredProducts(filtered);
+      onFilter('add', filtered);
     } else {
+      onFilter('remove');
+    }
+  }
+
+  /**
+   * Behavior during the filter
+   * @param {String} type type of function
+   * @param {Array} filteredData filtered data on search
+   */
+  function onFilter(type, filteredData) {
+    if (type !== 'add' && type !== 'remove') {
+      return console.error('Type should be equal "add" or "remove"');
+    }
+
+    if (type === 'add') {
+      setIsSearching(true);
+      setFilteredProducts(filteredData);
+    }
+
+    if (type === 'remove') {
       setIsSearching(false);
       setFilteredProducts([]);
     }
