@@ -1,35 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FaAward } from 'react-icons/fa';
 
 import ProductModal from '../ProductModal';
+import defaultImage from '../../../../assets/images/default.jpg';
 
 import { Container, Thumbnail, Promo } from './styles';
 
 const ProductCard = ({ product, category }) => {
   const [modal, setModal] = useState(false);
+  const [formattedPrice, setFormattedPrice] = useState({});
+
+  useEffect(() => {
+    /**
+     * Format price and promotional price
+     */
+    function formatPrice() {
+      if (product.price && product.promotional_price) {
+        setFormattedPrice({
+          price:
+            'R$ ' +
+            product.price
+              .toFixed(2)
+              .toString()
+              .replace('.', ','),
+          promotionalPrice:
+            'R$ ' +
+            product.promotional_price
+              .toFixed(2)
+              .toString()
+              .replace('.', ','),
+        });
+      } else if (product.price) {
+        setFormattedPrice({
+          price:
+            'R$ ' +
+            product.price
+              .toFixed(2)
+              .toString()
+              .replace('.', ','),
+        });
+      }
+      // TEMP
+      else {
+        setFormattedPrice({
+          price:
+            'R$ ' +
+            (9.99)
+              .toFixed(2)
+              .toString()
+              .replace('.', ','),
+          promotionalPrice:
+            'R$ ' +
+            (5.99)
+              .toFixed(2)
+              .toString()
+              .replace('.', ','),
+        });
+      }
+    }
+
+    formatPrice();
+  }, [product.price, product.promotional_price]);
 
   const toggleModal = () => setModal(!modal);
-
-  /**
-   * Prices
-   */
-  const price =
-    'R$ ' +
-    product.price
-      .toFixed(2)
-      .toString()
-      .replace('.', ',');
-
-  let promotionalPrice = null;
-  if (product.promotional_price) {
-    promotionalPrice =
-      'R$ ' +
-      product.promotional_price
-        .toFixed(2)
-        .toString()
-        .replace('.', ',');
-  }
 
   return (
     <Container
@@ -37,27 +71,35 @@ const ProductCard = ({ product, category }) => {
       className="d-flex align-items-center"
       onClick={toggleModal}
     >
-      <Thumbnail style={{ backgroundImage: `url(${product.thumbnail})` }} />
+      <Thumbnail
+        style={{
+          backgroundImage: `url(${
+            product.picture ? product.picture.url : defaultImage
+          })`,
+        }}
+      />
       <div className="p-3">
         <div className="d-flex justify-content-between">
-          <h6 style={{ maxWidth: product.promotional_price ? 124 : 200 }}>
+          <h6 style={{ maxWidth: formattedPrice.promotionalPrice ? 124 : 200 }}>
             {product.name}
           </h6>
-          {product.promotional_price && (
+          {formattedPrice.promotionalPrice && (
             <Promo className="d-flex align-items-center justify-content-center">
               <FaAward size="13" className="icon" />
-              <p className="m-0">{'Promo ' + category.name}</p>
+              <p className="m-0">{'Promo ' + category.description}</p>
             </Promo>
           )}
         </div>
         <p className="description">{product.description}</p>
         <div className="prices">
           <span className="price">
-            {product.promotional_price ? promotionalPrice : price}
+            {formattedPrice.promotionalPrice
+              ? formattedPrice.promotionalPrice
+              : formattedPrice.price}
           </span>
-          {product.promotional_price && (
+          {formattedPrice.promotionalPrice && (
             <small className="promotional-price ml-2 text-muted">
-              <del>{price}</del>
+              <del>{formattedPrice.price}</del>
             </small>
           )}
         </div>
@@ -68,7 +110,11 @@ const ProductCard = ({ product, category }) => {
         toggle={toggleModal}
         product={product}
         price={
-          product.promotional_price ? product.promotional_price : product.price
+          product.price
+            ? formattedPrice.promotionalPrice
+              ? formattedPrice.promotionalPrice
+              : product.price
+            : 5.99 // TEMP
         }
       />
     </Container>
