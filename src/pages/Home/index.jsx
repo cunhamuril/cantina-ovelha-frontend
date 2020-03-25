@@ -36,6 +36,17 @@ const Home = () => {
   }, []);
 
   /**
+   * every time search is empty updates to show all restaurants
+   */
+  useEffect(() => {
+    (async function() {
+      if (search === '') {
+        setRestaurants(await loadData());
+      }
+    })();
+  }, [search]);
+
+  /**
    * Load all restaurants data
    */
   async function loadData() {
