@@ -7,7 +7,7 @@ export const Container = styled.div`
   /* Box Model */
   margin: 15px;
   width: 386px;
-  max-height: 115px;
+  height: 115px;
 
   /* Other */
   cursor: pointer;
@@ -60,7 +60,7 @@ export const Thumbnail = styled.div`
 export const Promo = styled.div`
   /* Display */
   position: absolute;
-  transform: translate(150px, 5px);
+  transform: translate(149px, -5px);
 
   /* Box Model */
   max-width: 103px;
@@ -74,22 +74,22 @@ export const Promo = styled.div`
   background-color: ${primary};
 
   p {
+    margin-left: 2px;
+
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
 
-  .icon {
-    margin-right: 2px;
-  }
-
   ${media.lessThan('small')`
-  transform: translate(180px, 5px);
+    transform: translate(185px, -8px);
 
-  padding: 8px;
+    padding: 0;
+    width: 24px;
+    height: 24px;
 
     p{
-      display: none;    
-    }
+      display: none;
+    }    
   `}
 `;
