@@ -4,6 +4,7 @@ import { Container, Spinner } from 'reactstrap';
 import SearchField from '../../components/SearchField';
 import RestaurantCard from './components/RestaurantCard';
 
+import { CardsContainer } from './styles';
 import { darken } from '../../theme/colors';
 
 import api from '../../services/api';
@@ -95,10 +96,7 @@ const Home = () => {
           />
         </div>
       </Container>
-      <Container
-        fluid
-        className="d-flex align-items-center justify-content-center flex-wrap mt-5"
-      >
+      <CardsContainer className="d-flex align-items-center justify-content-center flex-wrap mt-5">
         {loading ? (
           <Spinner size="lg" color="info" />
         ) : restaurants && restaurants.length > 0 ? (
@@ -113,7 +111,7 @@ const Home = () => {
             Nenhum item corresponde a pesquisa
           </h4>
         )}
-      </Container>
+      </CardsContainer>
     </div>
   );
 };
