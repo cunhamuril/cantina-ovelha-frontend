@@ -69,4 +69,8 @@ export const OpenInfo = styled.div`
     font-weight: bold;
     text-align: center;
   }
+
+  ${media.lessThan('small')`
+    transform: translate(5px, -18px);
+  `}
 `;
