@@ -25,12 +25,12 @@ const Home = () => {
   }, []);
 
   /**
-   * Interval: every 15 minutes a new request is made
+   * Interval: every 5 minutes a new request is made
    */
   useEffect(() => {
     const interval = setInterval(async () => {
       setRestaurants(await loadData());
-    }, 1000 * 60 * 15);
+    }, 1000 * 60 * 5);
 
     return () => clearInterval(interval);
   }, []);
@@ -81,9 +81,9 @@ const Home = () => {
 
   return (
     <HomeContainer>
-      <a className="mt-5 d-flex justify-content-center text-center" href="/">
-        <h2>Bem-vindo ao Lista Rango</h2>
-      </a>
+      <h2 className="mt-5 d-flex justify-content-center text-center">
+        <a href="/">Bem-vindo ao Lista Rango</a>
+      </h2>
       <Container className="d-flex align-items-center justify-content-center mt-4 px-md-5">
         <div className="w-100 mx-md-5">
           <SearchField
