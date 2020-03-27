@@ -4,6 +4,9 @@ import media from 'styled-media-query';
 import { darken } from '../../../../theme/colors';
 
 export const Card = styled.div`
+  /* Display */
+  position: relative;
+
   /* Box Model */
   width: 367px;
   height: 100px;
@@ -47,9 +50,10 @@ export const Thumbnail = styled.div`
 
 export const OpenInfo = styled.div`
   /* Display */
+  top: 0;
+  right: 0;
   position: absolute;
-  display: inline-flex;
-  transform: translate(336px, -15px);
+  transform: translate(18px, -18px);
 
   /* Box Model */
   width: 48px;
@@ -65,8 +69,4 @@ export const OpenInfo = styled.div`
     font-weight: bold;
     text-align: center;
   }
-
-  ${media.lessThan('small')`
-    transform: translate(280px, -15px);
-  `}
 `;
