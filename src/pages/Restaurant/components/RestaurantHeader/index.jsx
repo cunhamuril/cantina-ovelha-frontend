@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
@@ -6,7 +7,7 @@ import defaultImage from '../../../../assets/images/default.jpg';
 import { Container, Thumbnail } from './styles';
 
 const RestaurantHeader = ({ restaurant }) => {
-  const [formattedTime, setFormattedTime] = useState('');
+  const [formattedSchedule, setFormattedSchedule] = useState([]);
   const [formattedAddress, setFormattedAddress] = useState('Sem endereço');
   const [logo, setLogo] = useState(defaultImage);
 
@@ -28,10 +29,40 @@ const RestaurantHeader = ({ restaurant }) => {
         );
       }
 
-      if (schedule && schedule[0]) {
-        const { from, to } = schedule[0];
+      if (schedule) {
+        const arrayDays = [
+          'Domingo',
+          'Segunda',
+          'Terça',
+          'Quarta',
+          'Quinta',
+          'Sexta',
+          'Sábado',
+        ];
 
-        setFormattedTime(`${from} às ${to}`);
+        const formatted = schedule.map((item, index) => {
+          const { start_day, end_day, from, to } = item;
+
+          const hours = `${from} às ${to}`;
+          let days;
+
+          if (start_day === end_day && start_day === 1) {
+            days = 'Domingos e Feriados';
+          } else if (start_day === end_day && start_day === 7) {
+            days = 'Sábados';
+          } else if (
+            (start_day === 1 && end_day === 7) ||
+            (start_day === 7 && end_day === 1)
+          ) {
+            days = 'Todos os dias';
+          } else {
+            days = `${arrayDays[start_day - 1]} à ${arrayDays[end_day - 1]}`;
+          }
+
+          return { key: index, days, hours };
+        });
+
+        setFormattedSchedule(formatted);
       }
     }
 
@@ -46,11 +77,14 @@ const RestaurantHeader = ({ restaurant }) => {
       <div className="m-3">
         <h3>{name}</h3>
         <p className="mb-2">{formattedAddress}</p>
-        <small>
-          Segunda à Sexta: <strong>{formattedTime}</strong> <br />
-          Sábados: <strong>{formattedTime}</strong> <br />
-          Domingo e Feriados: <strong>{formattedTime}</strong>
-        </small>
+        <div className="d-flex flex-column">
+          {formattedSchedule.length > 0 &&
+            formattedSchedule.map(schedule => (
+              <small key={schedule.key}>
+                {schedule.days}: <strong>{schedule.hours}</strong>
+              </small>
+            ))}
+        </div>
       </div>
     </Container>
   );
