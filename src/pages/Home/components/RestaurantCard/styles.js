@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import media from 'styled-media-query';
 
-import { darken } from '../../../../theme/colors';
+import { darken, primary, primaryLight } from '../../../../theme/colors';
 
 export const Card = styled.div`
   /* Display */
@@ -13,18 +13,22 @@ export const Card = styled.div`
   border-radius: 4px;
 
   /* Other */
-  opacity: 1;
   color: ${darken};
   background-color: #fff;
-  transition: all ease-out 0.2s;
+  transition: transform 0.2s;
   box-shadow: 0px 2px 4px #00000029;
 
   div > h5,
   div > small {
     max-width: 217px;
+    max-height: 50px !important;
 
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  div > .restaurant-address {
+    white-space: nowrap !important;
   }
 
   &:hover {
@@ -45,15 +49,15 @@ export const Thumbnail = styled.div`
   width: 100px;
   height: 100px;
   background-size: cover;
+  background-image: url(${props => props.url});
   background-position: center;
 `;
 
 export const OpenInfo = styled.div`
   /* Display */
-  top: 0;
-  right: 0;
+  top: -18px;
+  right: -18px;
   position: absolute;
-  transform: translate(18px, -18px);
 
   /* Box Model */
   width: 48px;
@@ -62,6 +66,7 @@ export const OpenInfo = styled.div`
 
   /* Other */
   font-size: 11px;
+  background-color: ${props => (props.isOpen ? primary : primaryLight)};
 
   small {
     color: #fff;
@@ -71,6 +76,6 @@ export const OpenInfo = styled.div`
   }
 
   ${media.lessThan('small')`
-    transform: translate(5px, -18px);
+    top: -10px;
   `}
 `;

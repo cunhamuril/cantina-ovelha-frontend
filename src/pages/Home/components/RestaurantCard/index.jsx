@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import DefaultImage from '../../../../assets/images/default.jpg';
 
-import { primary, primaryLight } from '../../../../theme/colors';
+// import { primary, primaryLight } from '../../../../theme/colors';
 import { Card, Thumbnail, OpenInfo } from './styles';
 
 const RestaurantCard = ({ restaurant }) => {
@@ -44,26 +44,15 @@ const RestaurantCard = ({ restaurant }) => {
       <Card className="d-flex mb-5 mx-4">
         <OpenInfo
           className="d-flex align-items-center justify-content-center"
-          style={{
-            backgroundColor: isRestaurantOpen ? primary : primaryLight,
-          }}
+          isOpen={isRestaurantOpen}
         >
           <small>{isRestaurantOpen ? 'Aberto agora' : 'Fechado'}</small>
         </OpenInfo>
-        <div style={{ maxWidth: 100, maxHeight: 100 }}>
-          <Thumbnail
-            style={{
-              backgroundImage: `url(${picture ? picture.url : DefaultImage})`,
-            }}
-          />
-        </div>
-        <div className="d-flex flex-column justify-content-center mx-4 w-100">
-          <h5 className="m-0" style={{ maxHeight: 50 }}>
-            {name}
-          </h5>
+        <Thumbnail url={picture ? picture.url : DefaultImage} />
+        <div className="d-flex flex-column justify-content-center mx-4">
+          <h5 className="m-0">{name}</h5>
           <small
             className="restaurant-address text-muted"
-            style={{ maxHeight: 20, whiteSpace: 'nowrap' }}
             title={formattedAddress}
           >
             {formattedAddress}

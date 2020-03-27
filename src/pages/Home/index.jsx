@@ -4,8 +4,7 @@ import { Container, Spinner } from 'reactstrap';
 import SearchField from '../../components/SearchField';
 import RestaurantCard from './components/RestaurantCard';
 
-import { CardsContainer } from './styles';
-import { darken } from '../../theme/colors';
+import { HomeContainer, CardsContainer } from './styles';
 
 import api from '../../services/api';
 const Home = () => {
@@ -81,14 +80,12 @@ const Home = () => {
   }
 
   return (
-    <div className="home">
-      <h2 className="mt-5 d-flex justify-content-center text-center">
-        <a href="/" style={{ textDecoration: 'none', color: darken }}>
-          Bem-vindo ao Lista Rango
-        </a>
-      </h2>
-      <Container className="d-flex align-items-center justify-content-center mt-4">
-        <div className="w-100 px-md-5 mx-md-5">
+    <HomeContainer>
+      <a className="mt-5 d-flex justify-content-center text-center" href="/">
+        <h2>Bem-vindo ao Lista Rango</h2>
+      </a>
+      <Container className="d-flex align-items-center justify-content-center mt-4 px-md-5">
+        <div className="w-100 mx-md-5">
           <SearchField
             textLabel="Buscar estabelecimento"
             backgroundColor="#FBFBFB"
@@ -112,7 +109,7 @@ const Home = () => {
           </h4>
         )}
       </CardsContainer>
-    </div>
+    </HomeContainer>
   );
 };
 

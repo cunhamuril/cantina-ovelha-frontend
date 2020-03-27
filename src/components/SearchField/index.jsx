@@ -10,7 +10,7 @@ const SearchField = ({ backgroundColor, textLabel, onSearch }) => {
   return (
     <SearchForm
       className="w-100 d-flex align-items-center justify-content-center"
-      style={{ backgroundColor }}
+      backgroundColor={backgroundColor}
       onSubmit={onSearch}
     >
       <SearchLabel onClick={() => searchInput.current.focus()}>
