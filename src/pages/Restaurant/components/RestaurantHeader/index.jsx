@@ -21,14 +21,14 @@ const RestaurantHeader = ({ restaurant }) => {
         setLogo(picture.url);
       }
 
-      if (address[0]) {
+      if (address && address[0]) {
         const { number, street, district, city, state } = address[0];
         setFormattedAddress(
           `${street}, ${number || 'S/N'}, ${district}, ${city}-${state}`
         );
       }
 
-      if (schedule[0]) {
+      if (schedule && schedule[0]) {
         const { from, to } = schedule[0];
 
         setFormattedTime(`${from} às ${to}`);

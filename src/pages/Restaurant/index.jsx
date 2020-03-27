@@ -16,9 +16,6 @@ import { Main } from './styles';
 import { lightGray } from '../../theme/colors';
 import 'react-accessible-accordion/dist/fancy-example.css';
 
-// TEMP
-// import RestaurantMock from '../../temp/restaurantMock';
-
 const Restaurant = ({ match }) => {
   const [pageNotFound, setPageNotFound] = useState(false);
   const [restaurant, setRestaurant] = useState({});
@@ -72,12 +69,12 @@ const Restaurant = ({ match }) => {
   }, []);
 
   /**
-   * Interval: every 15 minutes a new request is made
+   * Interval: every 5 minutes a new request is made
    */
   useEffect(() => {
     const interval = setInterval(async () => {
       setCategories(await loadCategoriesData());
-    }, 1000 * 60 * 15);
+    }, 1000 * 60 * 5);
 
     return () => clearInterval(interval);
   }, []);
@@ -180,20 +177,27 @@ const Restaurant = ({ match }) => {
                   allowMultipleExpanded={true}
                   allowZeroExpanded={true}
                 >
-                  {categories.map(category => (
-                    <CategoryAccordionItem
-                      key={category.id_category}
-                      category={category}
-                    >
-                      {category.product.map(product => (
-                        <ProductCard
-                          key={product.id_product}
-                          category={category}
-                          product={product}
-                        />
-                      ))}
-                    </CategoryAccordionItem>
-                  ))}
+                  {categories &&
+                    categories.map(category => (
+                      <CategoryAccordionItem
+                        key={category.id_category}
+                        category={category}
+                      >
+                        {category.product && category.product.length > 0 ? (
+                          category.product.map(product => (
+                            <ProductCard
+                              key={product.id_product}
+                              category={category}
+                              product={product}
+                            />
+                          ))
+                        ) : (
+                          <h5 className="mt-4 text-muted">
+                            Nenhum produto cadastrado nesta categoria
+                          </h5>
+                        )}
+                      </CategoryAccordionItem>
+                    ))}
                 </Accordion>
               )}
             </div>
