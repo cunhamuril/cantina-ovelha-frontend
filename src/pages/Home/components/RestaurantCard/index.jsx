@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -11,7 +12,6 @@ const RestaurantCard = ({ restaurant }) => {
   const [formattedAddress, setFormattedAddress] = useState('');
   const [isRestaurantOpen, setIsRestaurantOpen] = useState(false);
 
-  // eslint-disable-next-line camelcase
   const { id_restaurant, name, address, picture, schedule } = restaurant;
 
   useEffect(() => {
@@ -19,15 +19,17 @@ const RestaurantCard = ({ restaurant }) => {
      * Format address and isOpen data
      */
     function formatData() {
-      if (address[0]) {
-        const { number, street, district, city, state } = address[0];
+      if (address && address[0]) {
+        const [{ number, street, district, city, state }] = address;
         setFormattedAddress(
           `${street}, ${number || 'S/N'}, ${district}, ${city}-${state}`
         );
       }
 
-      if (schedule[0]) {
-        setIsRestaurantOpen(schedule[0].isOpen);
+      if (schedule) {
+        const result = schedule.map(item => item.isOpen).includes(true);
+
+        setIsRestaurantOpen(result);
       }
     }
 
@@ -36,7 +38,6 @@ const RestaurantCard = ({ restaurant }) => {
 
   return (
     <Link
-      // eslint-disable-next-line camelcase
       to={`/restaurants/${id_restaurant}`}
       style={{ textDecoration: 'none' }}
     >
