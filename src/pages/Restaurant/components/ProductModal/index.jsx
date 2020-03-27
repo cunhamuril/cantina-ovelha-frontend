@@ -44,6 +44,7 @@ const ProductModal = ({ isOpen, toggle, product, price }) => {
       <ModalHeader toggle={toggle} close={closeBtn} className="border-0 p-0" />
       <ModalBody className="d-flex flex-column align-items-center">
         <Thumbnail
+          image={product.picture}
           style={{
             backgroundImage: `url(${
               product.picture ? product.picture.url : defaultImage

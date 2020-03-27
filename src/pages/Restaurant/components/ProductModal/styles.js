@@ -15,6 +15,7 @@ export const Thumbnail = styled.div`
   height: 200px;
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
 
   ${media.lessThan('small')`
     width: 100%;
@@ -23,6 +24,8 @@ export const Thumbnail = styled.div`
 `;
 
 export const ProductContent = styled.div`
+  width: 100%;
+
   .product-info {
     font-size: 16px;
     color: ${darken};
