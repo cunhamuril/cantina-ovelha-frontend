@@ -6,7 +6,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { formatCurrency } from '../../../../utils/global';
 import { Thumbnail, ProductContent, Counter, AddBtn, CloseBtn } from './styles';
 
-import defaultImage from '../../../../assets/images/default.jpg';
+import defaultImage from '../../../../assets/images/defaultModal.png';
 
 const ProductModal = ({ isOpen, toggle, product, price }) => {
   const [totalPrice, setTotalPrice] = useState(price);
