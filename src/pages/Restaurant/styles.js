@@ -6,13 +6,14 @@ import { lightGray } from '../../theme/colors';
 export const Main = styled.div`
   /* Display */
   display: grid;
-  height: 100vh;
+  min-height: 100vh;
   grid-gap: 10%;
   grid-template-columns: 1fr 300px;
   grid-template-areas: 'content ads';
 
   .content {
     grid-area: content;
+    margin-bottom: 50px;
   }
 
   .ads {
