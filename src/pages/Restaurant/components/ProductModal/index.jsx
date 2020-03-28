@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { FaTimes } from 'react-icons/fa';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
+import { formatCurrency } from '../../../../utils/global';
 import { Thumbnail, ProductContent, Counter, AddBtn, CloseBtn } from './styles';
+
 import defaultImage from '../../../../assets/images/default.jpg';
 
 const ProductModal = ({ isOpen, toggle, product, price }) => {
@@ -16,9 +18,13 @@ const ProductModal = ({ isOpen, toggle, product, price }) => {
 
   /**
    * Counter
-   * @param {String} type Increment or decrement
+   * @param {String} type Should be equal "more" or "less"
    */
   const countAdd = type => {
+    if (type !== 'more' && type !== 'less') {
+      return console.error('Type should be equal "more" or "less"');
+    }
+
     if (type === 'more' && counter > 0) {
       setCounter(counter + 1);
     }
@@ -53,13 +59,7 @@ const ProductModal = ({ isOpen, toggle, product, price }) => {
             </p>
           </div>
           <div className="product-price align-self-end col-md-4 col-sm-12">
-            <h1>
-              {`R$ ${price
-                .toFixed(2)
-                .toString()
-                .replace('.', ',')}
-                `}
-            </h1>
+            <h1>{formatCurrency(price)}</h1>
           </div>
         </ProductContent>
       </ModalBody>
@@ -78,10 +78,7 @@ const ProductModal = ({ isOpen, toggle, product, price }) => {
           onClick={toggle}
         >
           <span className="add-text">Adicionar</span>
-          <span>{`R$ ${totalPrice
-            .toFixed(2)
-            .toString()
-            .replace('.', ',')}`}</span>
+          <span>{formatCurrency(totalPrice)}</span>
         </AddBtn>
       </ModalFooter>
     </Modal>

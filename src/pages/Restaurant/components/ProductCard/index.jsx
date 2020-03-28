@@ -5,6 +5,7 @@ import { FaAward } from 'react-icons/fa';
 import ProductModal from '../ProductModal';
 import defaultImage from '../../../../assets/images/default.jpg';
 
+import { formatCurrency } from '../../../../utils/global';
 import { Container, Thumbnail, Promo } from './styles';
 
 const ProductCard = ({ product, category }) => {
@@ -18,44 +19,19 @@ const ProductCard = ({ product, category }) => {
     function formatPrice() {
       if (product.price && product.promotional_price) {
         setFormattedPrice({
-          price:
-            'R$ ' +
-            product.price
-              .toFixed(2)
-              .toString()
-              .replace('.', ','),
-          promotionalPrice:
-            'R$ ' +
-            product.promotional_price
-              .toFixed(2)
-              .toString()
-              .replace('.', ','),
+          price: formatCurrency(product.price),
+          promotionalPrice: formatCurrency(product.promotional_price),
         });
       } else if (product.price) {
         setFormattedPrice({
-          price:
-            'R$ ' +
-            product.price
-              .toFixed(2)
-              .toString()
-              .replace('.', ','),
+          price: formatCurrency(product.price),
         });
       }
       // TEMP
       else {
         setFormattedPrice({
-          price:
-            'R$ ' +
-            (9.99)
-              .toFixed(2)
-              .toString()
-              .replace('.', ','),
-          promotionalPrice:
-            'R$ ' +
-            (5.99)
-              .toFixed(2)
-              .toString()
-              .replace('.', ','),
+          price: formatCurrency(9.99),
+          promotionalPrice: formatCurrency(5.99),
         });
       }
     }
