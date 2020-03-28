@@ -2,13 +2,13 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { MdSearch } from 'react-icons/md';
 
-import { SearchForm, SearchLabel, SearchInput, SearchButton } from './styles';
+import { Container, SearchLabel, SearchInput, SearchButton } from './styles';
 
 const SearchField = ({ backgroundColor, textLabel, onSearch }) => {
   const searchInput = useRef();
 
   return (
-    <SearchForm
+    <Container
       className="w-100 d-flex align-items-center justify-content-center"
       style={{ backgroundColor }}
       onSubmit={onSearch}
@@ -26,7 +26,7 @@ const SearchField = ({ backgroundColor, textLabel, onSearch }) => {
       <SearchButton type="submit">
         <MdSearch size="24" />
       </SearchButton>
-    </SearchForm>
+    </Container>
   );
 };
 

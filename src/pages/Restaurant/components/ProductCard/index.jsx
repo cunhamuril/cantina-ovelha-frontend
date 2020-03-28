@@ -68,25 +68,21 @@ const ProductCard = ({ product, category }) => {
   return (
     <Container
       key={product.key}
-      className="d-flex align-items-center"
       onClick={toggleModal}
+      className="d-flex align-items-center"
+      hasPromotionalPrice={formattedPrice.promotionalPrice}
     >
-      <Thumbnail
-        style={{
-          backgroundImage: `url(${
-            product.picture ? product.picture.url : defaultImage
-          })`,
-        }}
-      />
+      <Thumbnail img={product.picture ? product.picture.url : defaultImage} />
       <div className="p-3">
-        <div className="d-flex justify-content-between w-100">
-          <h6 style={{ maxWidth: formattedPrice.promotionalPrice ? 124 : 200 }}>
-            {product.name}
-          </h6>
+        <div className="d-flex justify-content-between">
+          <h6>{product.name}</h6>
           {formattedPrice.promotionalPrice && (
-            <Promo className="d-flex align-items-center justify-content-center">
+            <Promo
+              className="d-flex align-items-center justify-content-center"
+              title={category.description}
+            >
               <FaAward size="13" />
-              <p className="m-0">{'Promo ' + category.description}</p>
+              <p>{'Promo ' + category.description}</p>
             </Promo>
           )}
         </div>

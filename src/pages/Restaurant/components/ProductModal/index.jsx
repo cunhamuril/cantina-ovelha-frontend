@@ -39,18 +39,11 @@ const ProductModal = ({ isOpen, toggle, product, price }) => {
       toggle={toggle}
       centered
       size="lg"
-      style={{ maxWidth: 601 }}
+      style={{ maxWidth: 650 }}
     >
       <ModalHeader toggle={toggle} close={closeBtn} className="border-0 p-0" />
       <ModalBody className="d-flex flex-column align-items-center">
-        <Thumbnail
-          image={product.picture}
-          style={{
-            backgroundImage: `url(${
-              product.picture ? product.picture.url : defaultImage
-            })`,
-          }}
-        />
+        <Thumbnail img={product.picture ? product.picture.url : defaultImage} />
         <ProductContent className="mt-5 d-flex align-items-center flex-wrap">
           <div className="product-info col-md-8 col-sm-12">
             <h2>{product.name}</h2>
@@ -84,7 +77,7 @@ const ProductModal = ({ isOpen, toggle, product, price }) => {
           className="d-flex align-items-center justify-content-around flex-wrap"
           onClick={toggle}
         >
-          <span>Adicionar</span>
+          <span className="add-text">Adicionar</span>
           <span>{`R$ ${totalPrice
             .toFixed(2)
             .toString()

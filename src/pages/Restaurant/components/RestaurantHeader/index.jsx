@@ -71,9 +71,7 @@ const RestaurantHeader = ({ restaurant }) => {
 
   return (
     <Container className="d-flex align-items-center">
-      <div style={{ maxWidth: 145, maxHeight: 145 }}>
-        <Thumbnail style={{ backgroundImage: `url(${logo})` }} />
-      </div>
+      <Thumbnail img={logo} />
       <div className="m-3">
         <h3>{name}</h3>
         <p className="mb-2">{formattedAddress}</p>

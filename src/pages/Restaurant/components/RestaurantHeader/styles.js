@@ -21,4 +21,5 @@ export const Thumbnail = styled.div`
   height: 145px;
   background-size: cover;
   background-position: center;
+  background-image: url(${props => props.img});
 `;

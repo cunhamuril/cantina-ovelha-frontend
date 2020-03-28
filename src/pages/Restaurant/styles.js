@@ -6,28 +6,26 @@ import { lightGray } from '../../theme/colors';
 export const Main = styled.div`
   /* Display */
   display: grid;
-  min-height: 100vh;
+  height: 100vh;
+  grid-gap: 10%;
   grid-template-columns: 1fr 300px;
-  grid-template-areas: 'content menu';
+  grid-template-areas: 'content ads';
 
   .content {
     grid-area: content;
-    padding-right: 10rem;
   }
 
-  .menu {
-    grid-area: menu;
+  .ads {
+    grid-area: ads;
     background-color: ${lightGray};
   }
 
-  ${media.lessThan('large')`
-    grid-template-areas: 'content content';    
+  ${media.lessThan('huge')`    
+    grid-gap: 4%;
   `}
 
-  ${media.lessThan('huge')`
-    .content {
-      padding: 0;
-      grid-area: content;
-    }
+  ${media.lessThan('large')`
+    grid-template-areas: 'content content';    
+    grid-gap: 0;    
   `}
 `;

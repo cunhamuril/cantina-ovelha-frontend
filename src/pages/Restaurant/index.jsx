@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Container, Spinner } from 'reactstrap';
 import { Accordion } from 'react-accessible-accordion';
 
@@ -14,10 +14,10 @@ import api from '../../services/api';
 
 import { Main } from './styles';
 import { lightGray } from '../../theme/colors';
+
 import 'react-accessible-accordion/dist/fancy-example.css';
 
 const Restaurant = ({ match }) => {
-  const [pageNotFound, setPageNotFound] = useState(false);
   const [restaurant, setRestaurant] = useState({});
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,6 +27,8 @@ const Restaurant = ({ match }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   const { id } = match.params;
+
+  const history = useHistory();
 
   /**
    * Scroll to top when load page
@@ -44,7 +46,7 @@ const Restaurant = ({ match }) => {
         const res = await api.get(`/restaurants/${id}`);
 
         if (!res.data) {
-          return setPageNotFound(true);
+          history.push('/');
         }
 
         setRestaurant(res.data);
@@ -55,7 +57,7 @@ const Restaurant = ({ match }) => {
     }
 
     loadRestaurantData();
-  }, [id]);
+  }, [id, history]);
 
   /**
    * Render all categories and products
@@ -132,13 +134,9 @@ const Restaurant = ({ match }) => {
     }
   }
 
-  return pageNotFound ? (
-    <Redirect to="/" />
-  ) : (
+  return (
     <Container fluid className="mt-4">
-      <Container fluid>
-        <BackButton />
-      </Container>
+      <BackButton />
       {loading ? (
         <center>
           <Spinner className="mt-5" size="lg" color="info" />
@@ -148,7 +146,7 @@ const Restaurant = ({ match }) => {
           <RestaurantHeader restaurant={restaurant} />
 
           <Main className="mt-5">
-            <div className="content mr-md-5">
+            <div className="content">
               <SearchField
                 backgroundColor={lightGray}
                 textLabel="Buscar no cardápio"
@@ -201,7 +199,7 @@ const Restaurant = ({ match }) => {
                 </Accordion>
               )}
             </div>
-            <div className="menu" />
+            <div className="ads" />
           </Main>
         </div>
       )}

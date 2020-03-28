@@ -7,8 +7,6 @@ import {
   AccordionItemPanel,
 } from 'react-accessible-accordion';
 
-// import { Container } from './styles';
-
 import { darken } from '../../../../theme/colors';
 
 const CategoryAccordionItem = ({ category, children }) => (
