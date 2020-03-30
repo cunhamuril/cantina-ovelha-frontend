@@ -35,7 +35,7 @@ const Home = () => {
   }, []);
 
   /**
-   * every time search is empty updates to show all restaurants
+   * every time search is empty, updates to show all restaurants
    */
   useEffect(() => {
     (async function() {

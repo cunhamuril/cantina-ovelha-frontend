@@ -75,6 +75,17 @@ const Restaurant = ({ match }) => {
   }, []);
 
   /**
+   * every time search is empty, updates to show all products
+   */
+  useEffect(() => {
+    (async function() {
+      if (searchValue === '') {
+        onFilter('remove');
+      }
+    })();
+  }, [searchValue]);
+
+  /**
    * Load restaurant data
    */
   async function loadRestaurantData() {
@@ -104,9 +115,8 @@ const Restaurant = ({ match }) => {
     e.preventDefault();
 
     if (searchValue && searchValue.length > 0) {
-      const res = await api.get('/products');
-      const filtered = res.data.filter(product => {
-        return product.name.indexOf(searchValue) !== -1;
+      const filtered = products.filter(item => {
+        return item.product.name.indexOf(searchValue) !== -1;
       });
 
       onFilter('add', filtered);
@@ -158,11 +168,11 @@ const Restaurant = ({ match }) => {
               {isSearching ? (
                 filteredProducts && filteredProducts.length > 0 ? (
                   <div className="d-flex align-items-center justify-content-center flex-wrap mt-5">
-                    {filteredProducts.map(product => (
+                    {filteredProducts.map(item => (
                       <ProductCard
-                        key={product.id_product}
-                        category={product.category}
-                        product={product}
+                        key={item.id_restaurant_product}
+                        category={item.product.category.description}
+                        restaurantProduct={item}
                       />
                     ))}
                   </div>
