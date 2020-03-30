@@ -8,8 +8,7 @@ export const Card = styled.div`
   position: relative;
 
   /* Box Model */
-  width: 100%;
-  max-width: 367px;
+  width: 367px;
   height: 100px;
   border-radius: 4px;
 

@@ -10,7 +10,7 @@ import api from '../../services/api';
 const Home = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [search, setSearch] = useState('');
+  const [searchValue, setSearchValue] = useState('');
 
   /**
    * Render all restaurants data
@@ -39,11 +39,11 @@ const Home = () => {
    */
   useEffect(() => {
     (async function() {
-      if (search === '') {
+      if (searchValue === '') {
         setRestaurants(await loadData());
       }
     })();
-  }, [search]);
+  }, [searchValue]);
 
   /**
    * Load all restaurants data
@@ -66,16 +66,16 @@ const Home = () => {
    * @param {Event} e form event
    */
   async function handleSearch(e) {
-    setSearch(e.target.value);
+    setSearchValue(e.target.value);
     e.preventDefault();
 
     const data = await loadData();
 
-    if (search === '') {
+    if (searchValue === '') {
       setRestaurants(data);
     } else {
       const filteredRestaurants = data.filter(restaurant => {
-        return restaurant.name.indexOf(search) !== -1;
+        return restaurant.name.indexOf(searchValue) !== -1;
       });
 
       setRestaurants(filteredRestaurants);
@@ -108,7 +108,9 @@ const Home = () => {
           ))
         ) : (
           <h4 className="text-muted mt-5">
-            Nenhum item corresponde a pesquisa
+            {searchValue.length > 0
+              ? 'Nenhum item corresponde a pesquisa'
+              : 'Não há restaurantes cadastrados'}
           </h4>
         )}
       </CardsContainer>
