@@ -8,7 +8,8 @@ export const Card = styled.div`
   position: relative;
 
   /* Box Model */
-  width: 367px;
+  width: 100%;
+  max-width: 367px;
   height: 100px;
   border-radius: 4px;
 
@@ -35,7 +36,7 @@ export const Card = styled.div`
     transform: scale(1.05);
   }
 
-  ${media.lessThan('small')`
+  ${media.lessThan('medium')`
     width: 320px;    
 
     div > h5,
