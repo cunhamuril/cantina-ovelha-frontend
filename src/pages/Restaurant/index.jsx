@@ -181,8 +181,8 @@ const Restaurant = ({ match }) => {
                         key={category.id_category}
                         category={category}
                       >
-                        {category.product && category.product.length > 0 ? (
-                          category.product.map(product => (
+                        {category.products && category.products.length > 0 ? (
+                          category.products.map(product => (
                             <ProductCard
                               key={product.id_product}
                               category={category}

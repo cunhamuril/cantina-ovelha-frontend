@@ -11,7 +11,7 @@ const RestaurantHeader = ({ restaurant }) => {
   const [formattedAddress, setFormattedAddress] = useState('Sem endereço');
   const [logo, setLogo] = useState(defaultImage);
 
-  const { name, picture, address, schedule } = restaurant;
+  const { name, picture, addresses, schedules } = restaurant;
 
   useEffect(() => {
     /**
@@ -22,15 +22,15 @@ const RestaurantHeader = ({ restaurant }) => {
         setLogo(picture.url);
       }
 
-      if (address && address[0]) {
-        const { number, street, district, city, state } = address[0];
+      if (addresses && addresses[0]) {
+        const { number, street, district, city, state } = addresses[0];
         setFormattedAddress(
           `${street}, ${number || 'S/N'}, ${district}, ${city}-${state}`
         );
       }
 
-      if (schedule) {
-        const arrayDays = [
+      if (schedules) {
+        const weekDays = [
           'Domingo',
           'Segunda',
           'Terça',
@@ -40,7 +40,7 @@ const RestaurantHeader = ({ restaurant }) => {
           'Sábado',
         ];
 
-        const formatted = schedule.map((item, index) => {
+        const formatted = schedules.map((item, index) => {
           const { start_day, end_day, from, to } = item;
 
           const hours = `${from} às ${to}`;
@@ -56,7 +56,7 @@ const RestaurantHeader = ({ restaurant }) => {
           ) {
             days = 'Todos os dias';
           } else {
-            days = `${arrayDays[start_day - 1]} à ${arrayDays[end_day - 1]}`;
+            days = `${weekDays[start_day - 1]} à ${weekDays[end_day - 1]}`;
           }
 
           return { key: index, days, hours };
@@ -67,7 +67,7 @@ const RestaurantHeader = ({ restaurant }) => {
     }
 
     formatData();
-  }, [address, picture, schedule]);
+  }, [addresses, picture, schedules]);
 
   return (
     <Container className="d-flex align-items-center">
