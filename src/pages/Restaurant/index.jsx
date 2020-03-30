@@ -37,26 +37,8 @@ const Restaurant = ({ match }) => {
     window.scrollTo(0, 0);
   }, []);
 
-  /**
-   * Render restaurant and products data
-   */
   useEffect(() => {
-    async function renderData() {
-      const restaurant = await loadRestaurantData();
-
-      const { products } = restaurant;
-
-      const arr = products.map(item => item.product.category.description);
-      const categories = arr.filter(
-        (item, index) => arr.indexOf(item) === index
-      );
-
-      setRestaurant(restaurant);
-      setCategories(categories);
-      setProducts(products);
-    }
-
-    renderData();
+    loadRestaurantData();
 
     // eslint-disable-next-line
   }, []);
@@ -66,7 +48,7 @@ const Restaurant = ({ match }) => {
    */
   useEffect(() => {
     const interval = setInterval(async () => {
-      setCategories(await loadRestaurantData());
+      loadRestaurantData();
     }, 1000 * 60 * 5);
 
     return () => clearInterval(interval);
@@ -98,7 +80,16 @@ const Restaurant = ({ match }) => {
         history.push('/');
       }
 
-      return res.data;
+      const { products } = res.data;
+
+      const arr = products.map(item => item.product.category.description);
+      const categories = arr.filter(
+        (item, index) => arr.indexOf(item) === index
+      );
+
+      setRestaurant(res.data);
+      setCategories(categories);
+      setProducts(products);
     } catch (error) {
       return console.error(error);
     } finally {
