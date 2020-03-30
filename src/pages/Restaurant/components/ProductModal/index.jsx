@@ -8,7 +8,7 @@ import { Thumbnail, ProductContent, Counter, AddBtn, CloseBtn } from './styles';
 
 import defaultImage from '../../../../assets/images/defaultModal.png';
 
-const ProductModal = ({ isOpen, toggle, product, price }) => {
+const ProductModal = ({ isOpen, toggle, product, price, description }) => {
   const [totalPrice, setTotalPrice] = useState(price);
   const [counter, setCounter] = useState(1);
 
@@ -53,10 +53,7 @@ const ProductModal = ({ isOpen, toggle, product, price }) => {
         <ProductContent className="mt-5 d-flex align-items-center flex-wrap">
           <div className="product-info col-md-8 col-sm-12">
             <h2>{product.name}</h2>
-            <p>
-              {product.description ||
-                'Lorem ipsum dolor sit amet consectetur adipisicing elit.'}
-            </p>
+            <p>{description}</p>
           </div>
           <div className="product-price align-self-end col-md-4 col-sm-12">
             <h1>{formatCurrency(price)}</h1>
@@ -89,7 +86,8 @@ ProductModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,
   product: PropTypes.object.isRequired,
-  price: PropTypes.number.isRequired,
+  price: PropTypes.any.isRequired,
+  description: PropTypes.string.isRequired,
 };
 
 export default ProductModal;

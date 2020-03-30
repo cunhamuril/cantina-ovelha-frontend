@@ -20,14 +20,16 @@ const ProductCard = ({ restaurantProduct, category }) => {
    */
   useEffect(() => {
     function formatPrice() {
-      if (price && offers.length > 0 && offers[0]) {
+      if (price && offers.length > 0) {
+        const [{ promotional_price }] = offers;
+
         setFormattedPrice({
-          price: formatCurrency(+price),
-          promotionalPrice: formatCurrency(offers[0]),
+          price: formatCurrency(price),
+          promotionalPrice: formatCurrency(promotional_price),
         });
       } else if (price) {
         setFormattedPrice({
-          price: formatCurrency(+price),
+          price: formatCurrency(price),
         });
       } else {
         setFormattedPrice({
@@ -55,14 +57,18 @@ const ProductCard = ({ restaurantProduct, category }) => {
           {formattedPrice.promotionalPrice && (
             <Promo
               className="d-flex align-items-center justify-content-center"
-              title={category.description}
+              title={category}
             >
               <FaAward size="13" />
-              <p>{'Promo ' + category.description}</p>
+              <p>{'Promo ' + category}</p>
             </Promo>
           )}
         </div>
-        <p className="description">{product.description}</p>
+        <p className="description">
+          {formattedPrice.promotionalPrice
+            ? offers[0].description
+            : product.description}
+        </p>
         <div className="prices">
           <span className="price">
             {formattedPrice.promotionalPrice
@@ -81,10 +87,14 @@ const ProductCard = ({ restaurantProduct, category }) => {
         isOpen={modal}
         toggle={toggleModal}
         product={product}
-        // price={
-        //   price ? formattedPrice.promotionalPrice && offers[0].price : price
-        // }
-        price={+price}
+        description={
+          formattedPrice.promotionalPrice
+            ? offers[0].description
+            : product.description
+        }
+        price={
+          formattedPrice.promotionalPrice ? offers[0].promotional_price : price
+        }
       />
     </Container>
   );
