@@ -33,6 +33,10 @@ Desenvolvido em [React](https://reactjs.org/) e consumindo [API](https://github.
 
 ## Desafios e problemas
 
+- **Cardápio**
+
+  - Organizar produtos e categorias por restaurante no cardápio.
+
 - **Cards**
 
   - Posicionar corretamente e responsivamente selos de avisos (restaurante aberto ou fechado, promoções de produtos).
@@ -43,23 +47,25 @@ Desenvolvido em [React](https://reactjs.org/) e consumindo [API](https://github.
 
 - **Modal**
 
-  - Desenvolver um modal exatamente como está no design e responsivo.
+  - Desenvolver um modal exatamente como está no design.
 
 - **Horários**
-  - Dificuldade em lidar com horários exatamente como pede no escopo.
+  - Lidar com horários e promoções exatamente como pede no escopo.
 
 ## Possíveis Melhorias
 
 - **Performance**
 
   - Sistemas de horários;
-  - Sistemas de buscas.
+  - Sistemas de buscas;
+  - Atualizar dados automaticamente sem a necessidade de recarregar ou reabrir a página.
 
 - **Estrutura**
 
+  - Sistemas de buscas.
+  - Testes automatizados.
   - Organização de estilos com Styled Components, Bootstrap e CSS;
   - Responsividade de cards e modais.
-  - Sistemas de buscas.
   - Estrutura desta documentação.
 
 - **Padrões**

@@ -22,7 +22,7 @@ const CategoryAccordionItem = ({ category, children }) => (
           justifyContent: 'space-between',
         }}
       >
-        <strong>{category.description}</strong>
+        <strong>{category}</strong>
       </AccordionItemButton>
     </AccordionItemHeading>
     <AccordionItemPanel className="px-0">
@@ -34,7 +34,7 @@ const CategoryAccordionItem = ({ category, children }) => (
 );
 
 CategoryAccordionItem.propTypes = {
-  category: PropTypes.object.isRequired,
+  category: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
 };
 

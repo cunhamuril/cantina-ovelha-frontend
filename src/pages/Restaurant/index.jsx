@@ -20,8 +20,8 @@ import 'react-accessible-accordion/dist/fancy-example.css';
 const Restaurant = ({ match }) => {
   const [restaurant, setRestaurant] = useState({});
   const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
-
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -38,36 +38,27 @@ const Restaurant = ({ match }) => {
   }, []);
 
   /**
-   * Load restaurant data
-   */
-  useEffect(() => {
-    async function loadRestaurantData() {
-      try {
-        const res = await api.get(`/restaurants/${id}`);
-
-        if (!res.data) {
-          history.push('/');
-        }
-
-        setRestaurant(res.data);
-      } catch (error) {
-        console.error(error);
-      }
-      setLoading(false);
-    }
-
-    loadRestaurantData();
-  }, [id, history]);
-
-  /**
-   * Render all categories and products
+   * Render restaurant and products data
    */
   useEffect(() => {
     async function renderData() {
-      setCategories(await loadCategoriesData());
+      const restaurant = await loadRestaurantData();
+
+      const { products } = restaurant;
+
+      const arr = products.map(item => item.product.category.description);
+      const categories = arr.filter(
+        (item, index) => arr.indexOf(item) === index
+      );
+
+      setRestaurant(restaurant);
+      setCategories(categories);
+      setProducts(products);
     }
 
     renderData();
+
+    // eslint-disable-next-line
   }, []);
 
   /**
@@ -75,21 +66,32 @@ const Restaurant = ({ match }) => {
    */
   useEffect(() => {
     const interval = setInterval(async () => {
-      setCategories(await loadCategoriesData());
+      setCategories(await loadRestaurantData());
     }, 1000 * 60 * 5);
 
     return () => clearInterval(interval);
+
+    // eslint-disable-next-line
   }, []);
 
   /**
-   * Load all categories and products
+   * Load restaurant data
    */
-  async function loadCategoriesData() {
+  async function loadRestaurantData() {
+    setLoading(true);
+
     try {
-      const res = await api.get('/categories');
-      if (res.data) return res.data;
+      const res = await api.get(`/restaurants/${id}`);
+
+      if (!res.data) {
+        history.push('/');
+      }
+
+      return res.data;
     } catch (error) {
-      console.error(error);
+      return console.error(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -175,25 +177,21 @@ const Restaurant = ({ match }) => {
                   allowMultipleExpanded={true}
                   allowZeroExpanded={true}
                 >
-                  {categories &&
-                    categories.map(category => (
-                      <CategoryAccordionItem
-                        key={category.id_category}
-                        category={category}
-                      >
-                        {category.products && category.products.length > 0 ? (
-                          category.products.map(product => (
+                  {categories.length > 0 &&
+                    categories.map((category, index) => (
+                      <CategoryAccordionItem key={index} category={category}>
+                        {products
+                          .filter(
+                            menu =>
+                              menu.product.category.description === category
+                          )
+                          .map((item, index) => (
                             <ProductCard
-                              key={product.id_product}
+                              key={index}
+                              restaurantProduct={item}
                               category={category}
-                              product={product}
                             />
-                          ))
-                        ) : (
-                          <h5 className="mt-4 text-muted">
-                            Nenhum produto cadastrado nesta categoria
-                          </h5>
-                        )}
+                          ))}
                       </CategoryAccordionItem>
                     ))}
                 </Accordion>

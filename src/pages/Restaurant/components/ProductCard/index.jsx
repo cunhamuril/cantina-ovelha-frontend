@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FaAward } from 'react-icons/fa';
@@ -8,42 +9,41 @@ import defaultImage from '../../../../assets/images/default.jpg';
 import { formatCurrency } from '../../../../utils/global';
 import { Container, Thumbnail, Promo } from './styles';
 
-const ProductCard = ({ product, category }) => {
+const ProductCard = ({ restaurantProduct, category }) => {
   const [modal, setModal] = useState(false);
   const [formattedPrice, setFormattedPrice] = useState({});
 
+  const { id_restaurant_product, price, product, offers } = restaurantProduct;
+
+  /**
+   * Format price and promotional price
+   */
   useEffect(() => {
-    /**
-     * Format price and promotional price
-     */
     function formatPrice() {
-      if (product.price && product.promotional_price) {
+      if (price && offers.length > 0 && offers[0]) {
         setFormattedPrice({
-          price: formatCurrency(product.price),
-          promotionalPrice: formatCurrency(product.promotional_price),
+          price: formatCurrency(+price),
+          promotionalPrice: formatCurrency(offers[0]),
         });
-      } else if (product.price) {
+      } else if (price) {
         setFormattedPrice({
-          price: formatCurrency(product.price),
+          price: formatCurrency(+price),
         });
-      }
-      // TEMP
-      else {
+      } else {
         setFormattedPrice({
-          price: formatCurrency(9.99),
-          promotionalPrice: formatCurrency(5.99),
+          price: formatCurrency(0),
         });
       }
     }
 
     formatPrice();
-  }, [product.price, product.promotional_price]);
+  }, [price, offers]);
 
   const toggleModal = () => setModal(!modal);
 
   return (
     <Container
-      key={product.key}
+      key={id_restaurant_product}
       onClick={toggleModal}
       className="d-flex align-items-center"
       hasPromotionalPrice={formattedPrice.promotionalPrice}
@@ -81,21 +81,18 @@ const ProductCard = ({ product, category }) => {
         isOpen={modal}
         toggle={toggleModal}
         product={product}
-        price={
-          product.price
-            ? formattedPrice.promotionalPrice
-              ? formattedPrice.promotionalPrice
-              : product.price
-            : 5.99 // TEMP
-        }
+        // price={
+        //   price ? formattedPrice.promotionalPrice && offers[0].price : price
+        // }
+        price={+price}
       />
     </Container>
   );
 };
 
 ProductCard.propTypes = {
-  product: PropTypes.object.isRequired,
-  category: PropTypes.object.isRequired,
+  restaurantProduct: PropTypes.object.isRequired,
+  category: PropTypes.string.isRequired,
 };
 
 export default ProductCard;

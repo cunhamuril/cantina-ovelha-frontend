@@ -9,7 +9,7 @@ import { HomeContainer, CardsContainer } from './styles';
 import api from '../../services/api';
 const Home = () => {
   const [restaurants, setRestaurants] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
 
   /**
@@ -18,7 +18,6 @@ const Home = () => {
   useEffect(() => {
     async function renderData() {
       setRestaurants(await loadData());
-      setLoading(false);
     }
 
     renderData();
@@ -50,11 +49,15 @@ const Home = () => {
    * Load all restaurants data
    */
   async function loadData() {
+    setLoading(true);
+
     try {
       const res = await api.get('/restaurants');
       return res.data;
     } catch (error) {
       return console.error(error);
+    } finally {
+      setLoading(false);
     }
   }
 
