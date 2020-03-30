@@ -159,11 +159,13 @@ const Restaurant = ({ match }) => {
 
           <Main className="mt-5">
             <div className="content">
-              <SearchField
-                backgroundColor={lightGray}
-                textLabel="Buscar no cardápio"
-                onSearch={handleSearch}
-              />
+              {categories.length > 0 && (
+                <SearchField
+                  backgroundColor={lightGray}
+                  textLabel="Buscar no cardápio"
+                  onSearch={handleSearch}
+                />
+              )}
 
               {isSearching ? (
                 filteredProducts && filteredProducts.length > 0 ? (
@@ -178,7 +180,7 @@ const Restaurant = ({ match }) => {
                   </div>
                 ) : (
                   <h4 className="text-muted mt-5 text-center">
-                    Nenhum item corresponde a pesquisa
+                    Nenhum produto corresponde a pesquisa
                   </h4>
                 )
               ) : (
@@ -187,7 +189,7 @@ const Restaurant = ({ match }) => {
                   allowMultipleExpanded={true}
                   allowZeroExpanded={true}
                 >
-                  {categories.length > 0 &&
+                  {categories.length > 0 ? (
                     categories.map((category, index) => (
                       <CategoryAccordionItem key={index} category={category}>
                         {products
@@ -203,7 +205,12 @@ const Restaurant = ({ match }) => {
                             />
                           ))}
                       </CategoryAccordionItem>
-                    ))}
+                    ))
+                  ) : (
+                    <h4 className="text-muted mt-5 text-center">
+                      Nenhum produto cadastrado
+                    </h4>
+                  )}
                 </Accordion>
               )}
             </div>
