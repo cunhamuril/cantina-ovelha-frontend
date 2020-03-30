@@ -5,7 +5,8 @@ import { secondary, secondaryDark } from '../../theme/colors';
 export const Container = styled.button`
   /* Display */
   position: absolute;
-  transform: translateY(-72px);
+  top: 14px;
+  left: 20px;
 
   /* Box Model */
   padding: 5px 15px;

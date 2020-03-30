@@ -1,56 +1,84 @@
+/* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
+import { formatAddress } from '../../../../utils/global';
 import defaultImage from '../../../../assets/images/default.jpg';
 
 import { Container, Thumbnail } from './styles';
 
 const RestaurantHeader = ({ restaurant }) => {
-  const [formattedTime, setFormattedTime] = useState('');
+  const [formattedSchedule, setFormattedSchedule] = useState([]);
   const [formattedAddress, setFormattedAddress] = useState('Sem endereço');
   const [logo, setLogo] = useState(defaultImage);
 
-  const { name, picture, address, schedule } = restaurant;
+  const { name, picture, addresses, schedules } = restaurant;
 
   useEffect(() => {
     /**
      * Format picture, address and schedule data
      */
     function formatData() {
+      setFormattedAddress(formatAddress(addresses));
+
       if (picture) {
         setLogo(picture.url);
       }
 
-      if (address[0]) {
-        const { number, street, district, city, state } = address[0];
-        setFormattedAddress(
-          `${street}, ${number || 'S/N'}, ${district}, ${city}-${state}`
-        );
-      }
+      if (schedules) {
+        const weekDays = [
+          'Domingo',
+          'Segunda',
+          'Terça',
+          'Quarta',
+          'Quinta',
+          'Sexta',
+          'Sábado',
+        ];
 
-      if (schedule[0]) {
-        const { from, to } = schedule[0];
+        const formatted = schedules.map((item, index) => {
+          const { start_day, end_day, from, to } = item;
 
-        setFormattedTime(`${from} às ${to}`);
+          const hours = `${from} às ${to}`;
+          let days;
+
+          if (start_day === end_day && start_day === 1) {
+            days = 'Domingos e Feriados';
+          } else if (start_day === end_day && start_day === 7) {
+            days = 'Sábados';
+          } else if (
+            (start_day === 1 && end_day === 7) ||
+            (start_day === 7 && end_day === 1)
+          ) {
+            days = 'Todos os dias';
+          } else {
+            days = `${weekDays[start_day - 1]} à ${weekDays[end_day - 1]}`;
+          }
+
+          return { key: index, days, hours };
+        });
+
+        setFormattedSchedule(formatted);
       }
     }
 
     formatData();
-  }, [address, picture, schedule]);
+  }, [addresses, picture, schedules]);
 
   return (
     <Container className="d-flex align-items-center">
-      <div style={{ maxWidth: 145, maxHeight: 145 }}>
-        <Thumbnail style={{ backgroundImage: `url(${logo})` }} />
-      </div>
+      <Thumbnail img={logo} />
       <div className="m-3">
         <h3>{name}</h3>
         <p className="mb-2">{formattedAddress}</p>
-        <small>
-          Segunda à Sexta: <strong>{formattedTime}</strong> <br />
-          Sábados: <strong>{formattedTime}</strong> <br />
-          Domingo e Feriados: <strong>{formattedTime}</strong>
-        </small>
+        <div className="d-flex flex-column">
+          {formattedSchedule.length > 0 &&
+            formattedSchedule.map(schedule => (
+              <small key={schedule.key}>
+                {schedule.days}: <strong>{schedule.hours}</strong>
+              </small>
+            ))}
+        </div>
       </div>
     </Container>
   );

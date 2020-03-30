@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { FaTimes } from 'react-icons/fa';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
+import { formatCurrency } from '../../../../utils/global';
 import { Thumbnail, ProductContent, Counter, AddBtn, CloseBtn } from './styles';
-import defaultImage from '../../../../assets/images/default.jpg';
 
-const ProductModal = ({ isOpen, toggle, product, price }) => {
+import defaultImage from '../../../../assets/images/defaultModal.png';
+
+const ProductModal = ({ isOpen, toggle, product, price, description }) => {
   const [totalPrice, setTotalPrice] = useState(price);
   const [counter, setCounter] = useState(1);
 
@@ -16,9 +18,13 @@ const ProductModal = ({ isOpen, toggle, product, price }) => {
 
   /**
    * Counter
-   * @param {String} type Increment or decrement
+   * @param {String} type Should be equal "more" or "less"
    */
   const countAdd = type => {
+    if (type !== 'more' && type !== 'less') {
+      return console.error('Type should be equal "more" or "less"');
+    }
+
     if (type === 'more' && counter > 0) {
       setCounter(counter + 1);
     }
@@ -39,33 +45,18 @@ const ProductModal = ({ isOpen, toggle, product, price }) => {
       toggle={toggle}
       centered
       size="lg"
-      style={{ maxWidth: 601 }}
+      style={{ maxWidth: 650 }}
     >
       <ModalHeader toggle={toggle} close={closeBtn} className="border-0 p-0" />
       <ModalBody className="d-flex flex-column align-items-center">
-        <Thumbnail
-          style={{
-            backgroundImage: `url(${
-              product.picture ? product.picture.url : defaultImage
-            })`,
-          }}
-        />
+        <Thumbnail img={product.picture ? product.picture.url : defaultImage} />
         <ProductContent className="mt-5 d-flex align-items-center flex-wrap">
           <div className="product-info col-md-8 col-sm-12">
             <h2>{product.name}</h2>
-            <p>
-              {product.description ||
-                'Lorem ipsum dolor sit amet consectetur adipisicing elit.'}
-            </p>
+            <p>{description}</p>
           </div>
           <div className="product-price align-self-end col-md-4 col-sm-12">
-            <h1>
-              {`R$ ${price
-                .toFixed(2)
-                .toString()
-                .replace('.', ',')}
-                `}
-            </h1>
+            <h1>{formatCurrency(price)}</h1>
           </div>
         </ProductContent>
       </ModalBody>
@@ -83,11 +74,8 @@ const ProductModal = ({ isOpen, toggle, product, price }) => {
           className="d-flex align-items-center justify-content-around flex-wrap"
           onClick={toggle}
         >
-          <span>Adicionar</span>
-          <span>{`R$ ${totalPrice
-            .toFixed(2)
-            .toString()
-            .replace('.', ',')}`}</span>
+          <span className="add-text">Adicionar</span>
+          <span>{formatCurrency(totalPrice)}</span>
         </AddBtn>
       </ModalFooter>
     </Modal>
@@ -98,7 +86,8 @@ ProductModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,
   product: PropTypes.object.isRequired,
-  price: PropTypes.number.isRequired,
+  price: PropTypes.any.isRequired,
+  description: PropTypes.string.isRequired,
 };
 
 export default ProductModal;

@@ -15,6 +15,8 @@ export const Thumbnail = styled.div`
   height: 200px;
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
+  background-image: url(${props => props.img});
 
   ${media.lessThan('small')`
     width: 100%;
@@ -23,6 +25,8 @@ export const Thumbnail = styled.div`
 `;
 
 export const ProductContent = styled.div`
+  width: 100%;
+
   .product-info {
     font-size: 16px;
     color: ${darken};
@@ -61,8 +65,9 @@ export const Counter = styled.div`
 export const CloseBtn = styled.button`
   /* Display */
   z-index: 9;
+  top: -22px;
+  right: -22px;
   position: absolute;
-  transform: translate(575px, -25px);
 
   /* Box Model */
   width: 48px;
@@ -76,17 +81,15 @@ export const CloseBtn = styled.button`
   font-size: 25px;
   background-color: #fff;
 
-  ${media.lessThan('small')`
-    position: relative;
-    transform: translate(0, 0);
-    
-    margin: 10px;
+  ${media.lessThan('small')`    
+    right: 5px;
   `}
 `;
 
 export const AddBtn = styled.button`
   /* Box Model */
-  width: 265px;
+  width: 100%;
+  max-width: 265px;
   height: 50px;
   border: none;
   padding: 10px 15px;
@@ -103,4 +106,12 @@ export const AddBtn = styled.button`
   &:hover {
     background-color: ${secondaryDark};
   }
+
+  ${media.lessThan('small')`    
+    max-width: 160px;    
+
+    .add-text {
+      display: none;
+    }
+  `}
 `;

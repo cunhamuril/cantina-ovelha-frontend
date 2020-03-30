@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Container, Spinner } from 'reactstrap';
 import { Accordion } from 'react-accessible-accordion';
 
@@ -14,88 +14,132 @@ import api from '../../services/api';
 
 import { Main } from './styles';
 import { lightGray } from '../../theme/colors';
+
 import 'react-accessible-accordion/dist/fancy-example.css';
 
-// TEMP
-// import RestaurantMock from '../../temp/restaurantMock';
-
 const Restaurant = ({ match }) => {
-  const [pageNotFound, setPageNotFound] = useState(false);
   const [restaurant, setRestaurant] = useState({});
   const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
-
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   const { id } = match.params;
 
-  useEffect(() => {
-    async function loadRestaurantData() {
-      try {
-        const res = await api.get(`/restaurants/${id}`);
-
-        if (!res.data) {
-          return setPageNotFound(true);
-        }
-
-        setRestaurant(res.data);
-      } catch (error) {
-        console.error(error);
-      }
-      setLoading(false);
-    }
-
-    loadRestaurantData();
-  }, [id]);
-
-  useEffect(() => {
-    async function loadCategoriesData() {
-      try {
-        const res = await api.get('/categories');
-        if (res.data) setCategories(res.data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    loadCategoriesData();
-  }, []);
+  const history = useHistory();
 
   /**
-   * Scroll to top of page when load this component
+   * Scroll to top when load page
    */
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  useEffect(() => {
+    loadRestaurantData();
+
+    // eslint-disable-next-line
+  }, []);
+
+  /**
+   * Interval: every 5 minutes a new request is made
+   */
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      loadRestaurantData();
+    }, 1000 * 60 * 5);
+
+    return () => clearInterval(interval);
+
+    // eslint-disable-next-line
+  }, []);
+
+  /**
+   * every time search is empty, updates to show all products
+   */
+  useEffect(() => {
+    (async function() {
+      if (searchValue === '') {
+        onFilter('remove');
+      }
+    })();
+  }, [searchValue]);
+
+  /**
+   * Load restaurant data
+   */
+  async function loadRestaurantData() {
+    setLoading(true);
+
+    try {
+      const res = await api.get(`/restaurants/${id}`);
+
+      if (!res.data) {
+        history.push('/');
+      }
+
+      const { products } = res.data;
+
+      const arr = products.map(item => item.product.category.description);
+      const categories = arr.filter(
+        (item, index) => arr.indexOf(item) === index
+      );
+
+      setRestaurant(res.data);
+      setCategories(categories);
+      setProducts(products);
+    } catch (error) {
+      return console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  /**
+   * Load filtered products data
+   * @param {Event} e form event
+   */
   async function handleSearch(e) {
     setSearchValue(e.target.value);
     e.preventDefault();
 
-    const res = await api.get('/products');
-
     if (searchValue && searchValue.length > 0) {
-      const filtered = res.data.filter(product => {
-        return product.name.indexOf(searchValue) !== -1;
+      const filtered = products.filter(item => {
+        return item.product.name.indexOf(searchValue) !== -1;
       });
 
-      setIsSearching(true);
-      setFilteredProducts(filtered);
+      onFilter('add', filtered);
     } else {
+      onFilter('remove');
+    }
+  }
+
+  /**
+   * Behavior during the filter
+   * @param {String} type type of function
+   * @param {Array} filteredData filtered data on search
+   */
+  function onFilter(type, filteredData) {
+    if (type !== 'add' && type !== 'remove') {
+      return console.error('Type should be equal "add" or "remove"');
+    }
+
+    if (type === 'add') {
+      setIsSearching(true);
+      setFilteredProducts(filteredData);
+    }
+
+    if (type === 'remove') {
       setIsSearching(false);
       setFilteredProducts([]);
     }
   }
 
-  return pageNotFound ? (
-    <Redirect to="/" />
-  ) : (
+  return (
     <Container fluid className="mt-4">
-      <Container fluid>
-        <BackButton />
-      </Container>
+      <BackButton />
       {loading ? (
         <center>
           <Spinner className="mt-5" size="lg" color="info" />
@@ -105,27 +149,29 @@ const Restaurant = ({ match }) => {
           <RestaurantHeader restaurant={restaurant} />
 
           <Main className="mt-5">
-            <div className="content mr-md-5">
-              <SearchField
-                backgroundColor={lightGray}
-                textLabel="Buscar no cardápio"
-                onSearch={handleSearch}
-              />
+            <div className="content">
+              {categories.length > 0 && (
+                <SearchField
+                  backgroundColor={lightGray}
+                  textLabel="Buscar no cardápio"
+                  onSearch={handleSearch}
+                />
+              )}
 
               {isSearching ? (
                 filteredProducts && filteredProducts.length > 0 ? (
                   <div className="d-flex align-items-center justify-content-center flex-wrap mt-5">
-                    {filteredProducts.map(product => (
+                    {filteredProducts.map(item => (
                       <ProductCard
-                        key={product.id_product}
-                        category={product.category}
-                        product={product}
+                        key={item.id_restaurant_product}
+                        category={item.product.category.description}
+                        restaurantProduct={item}
                       />
                     ))}
                   </div>
                 ) : (
                   <h4 className="text-muted mt-5 text-center">
-                    Nenhum item corresponde a pesquisa
+                    Nenhum produto corresponde a pesquisa
                   </h4>
                 )
               ) : (
@@ -134,24 +180,32 @@ const Restaurant = ({ match }) => {
                   allowMultipleExpanded={true}
                   allowZeroExpanded={true}
                 >
-                  {categories.map(category => (
-                    <CategoryAccordionItem
-                      key={category.id_category}
-                      category={category}
-                    >
-                      {category.product.map(product => (
-                        <ProductCard
-                          key={product.id_product}
-                          category={category}
-                          product={product}
-                        />
-                      ))}
-                    </CategoryAccordionItem>
-                  ))}
+                  {categories.length > 0 ? (
+                    categories.map((category, index) => (
+                      <CategoryAccordionItem key={index} category={category}>
+                        {products
+                          .filter(
+                            menu =>
+                              menu.product.category.description === category
+                          )
+                          .map((item, index) => (
+                            <ProductCard
+                              key={index}
+                              restaurantProduct={item}
+                              category={category}
+                            />
+                          ))}
+                      </CategoryAccordionItem>
+                    ))
+                  ) : (
+                    <h4 className="text-muted mt-5 text-center">
+                      Nenhum produto cadastrado
+                    </h4>
+                  )}
                 </Accordion>
               )}
             </div>
-            <div className="menu" />
+            <div className="ads" />
           </Main>
         </div>
       )}

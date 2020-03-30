@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import DefaultImage from '../../../../assets/images/default.jpg';
+import { formatAddress } from '../../../../utils/global';
+import defaultImage from '../../../../assets/images/default.jpg';
 
-// import { primary, primaryLight } from '../../../../theme/colors';
 import { Card, Thumbnail, OpenInfo } from './styles';
 
 const RestaurantCard = ({ restaurant }) => {
@@ -19,12 +19,7 @@ const RestaurantCard = ({ restaurant }) => {
      * Format address and isOpen data
      */
     function formatData() {
-      if (addresses && addresses[0]) {
-        const [{ number, street, district, city, state }] = addresses;
-        setFormattedAddress(
-          `${street}, ${number || 'S/N'}, ${district}, ${city}-${state}`
-        );
-      }
+      setFormattedAddress(formatAddress(addresses));
 
       if (schedules) {
         const result = schedules.map(item => item.isOpen).includes(true);
@@ -48,7 +43,7 @@ const RestaurantCard = ({ restaurant }) => {
         >
           <small>{isRestaurantOpen ? 'Aberto agora' : 'Fechado'}</small>
         </OpenInfo>
-        <Thumbnail url={picture ? picture.url : DefaultImage} />
+        <Thumbnail url={picture ? picture.url : defaultImage} />
         <div className="d-flex flex-column justify-content-center mx-4">
           <h5 className="m-0">{name}</h5>
           <small

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FaAward } from 'react-icons/fa';
@@ -5,92 +6,69 @@ import { FaAward } from 'react-icons/fa';
 import ProductModal from '../ProductModal';
 import defaultImage from '../../../../assets/images/default.jpg';
 
+import { formatCurrency } from '../../../../utils/global';
 import { Container, Thumbnail, Promo } from './styles';
 
-const ProductCard = ({ product, category }) => {
+const ProductCard = ({ restaurantProduct, category }) => {
   const [modal, setModal] = useState(false);
   const [formattedPrice, setFormattedPrice] = useState({});
 
+  const { id_restaurant_product, price, product, offers } = restaurantProduct;
+
+  /**
+   * Format price and promotional price
+   */
   useEffect(() => {
-    /**
-     * Format price and promotional price
-     */
     function formatPrice() {
-      if (product.price && product.promotional_price) {
+      if (price && offers.length > 0) {
+        const [{ promotional_price }] = offers;
+
         setFormattedPrice({
-          price:
-            'R$ ' +
-            product.price
-              .toFixed(2)
-              .toString()
-              .replace('.', ','),
-          promotionalPrice:
-            'R$ ' +
-            product.promotional_price
-              .toFixed(2)
-              .toString()
-              .replace('.', ','),
+          price: formatCurrency(price),
+          promotionalPrice: formatCurrency(promotional_price),
         });
-      } else if (product.price) {
+      } else if (price) {
         setFormattedPrice({
-          price:
-            'R$ ' +
-            product.price
-              .toFixed(2)
-              .toString()
-              .replace('.', ','),
+          price: formatCurrency(price),
         });
-      }
-      // TEMP
-      else {
+      } else {
         setFormattedPrice({
-          price:
-            'R$ ' +
-            (9.99)
-              .toFixed(2)
-              .toString()
-              .replace('.', ','),
-          promotionalPrice:
-            'R$ ' +
-            (5.99)
-              .toFixed(2)
-              .toString()
-              .replace('.', ','),
+          price: formatCurrency(0),
         });
       }
     }
 
     formatPrice();
-  }, [product.price, product.promotional_price]);
+  }, [price, offers]);
 
   const toggleModal = () => setModal(!modal);
 
   return (
     <Container
-      key={product.key}
-      className="d-flex align-items-center"
+      key={id_restaurant_product}
       onClick={toggleModal}
+      className="d-flex align-items-center"
+      hasPromotionalPrice={formattedPrice.promotionalPrice}
     >
-      <Thumbnail
-        style={{
-          backgroundImage: `url(${
-            product.picture ? product.picture.url : defaultImage
-          })`,
-        }}
-      />
+      <Thumbnail img={product.picture ? product.picture.url : defaultImage} />
       <div className="p-3">
         <div className="d-flex justify-content-between">
-          <h6 style={{ maxWidth: formattedPrice.promotionalPrice ? 124 : 200 }}>
-            {product.name}
-          </h6>
+          <h6>{product.name}</h6>
           {formattedPrice.promotionalPrice && (
-            <Promo className="d-flex align-items-center justify-content-center">
-              <FaAward size="13" className="icon" />
-              <p className="m-0">{'Promo ' + category.description}</p>
+            <Promo
+              className="d-flex align-items-center justify-content-center"
+              title={category}
+            >
+              <FaAward size="13" />
+              <p>{'Promo ' + category}</p>
             </Promo>
           )}
         </div>
-        <p className="description">{product.description}</p>
+        <p className="description">
+          {formattedPrice.promotionalPrice
+            ? offers[0].description
+            : product.description}
+        </p>
         <div className="prices">
           <span className="price">
             {formattedPrice.promotionalPrice
@@ -109,12 +87,13 @@ const ProductCard = ({ product, category }) => {
         isOpen={modal}
         toggle={toggleModal}
         product={product}
+        description={
+          formattedPrice.promotionalPrice
+            ? offers[0].description
+            : product.description
+        }
         price={
-          product.price
-            ? formattedPrice.promotionalPrice
-              ? formattedPrice.promotionalPrice
-              : product.price
-            : 5.99 // TEMP
+          formattedPrice.promotionalPrice ? offers[0].promotional_price : price
         }
       />
     </Container>
@@ -122,8 +101,8 @@ const ProductCard = ({ product, category }) => {
 };
 
 ProductCard.propTypes = {
-  product: PropTypes.object.isRequired,
-  category: PropTypes.object.isRequired,
+  restaurantProduct: PropTypes.object.isRequired,
+  category: PropTypes.string.isRequired,
 };
 
 export default ProductCard;
