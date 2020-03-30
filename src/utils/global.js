@@ -8,3 +8,16 @@ export function formatCurrency(value) {
     currency: 'BRL',
   }).format(value);
 }
+
+/**
+ * Format address
+ * @param {Array} value address value
+ */
+export function formatAddress(value) {
+  if (value && value.length > 0) {
+    const [{ number, street, district, city, state }] = value;
+    return `${street}, ${number || 'S/N'}, ${district}, ${city}-${state}`;
+  } else {
+    return 'Sem endereço';
+  }
+}

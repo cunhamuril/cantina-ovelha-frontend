@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
+import { formatAddress } from '../../../../utils/global';
 import defaultImage from '../../../../assets/images/default.jpg';
 
 import { Container, Thumbnail } from './styles';
@@ -18,15 +19,10 @@ const RestaurantHeader = ({ restaurant }) => {
      * Format picture, address and schedule data
      */
     function formatData() {
+      setFormattedAddress(formatAddress(addresses));
+
       if (picture) {
         setLogo(picture.url);
-      }
-
-      if (addresses && addresses[0]) {
-        const { number, street, district, city, state } = addresses[0];
-        setFormattedAddress(
-          `${street}, ${number || 'S/N'}, ${district}, ${city}-${state}`
-        );
       }
 
       if (schedules) {
