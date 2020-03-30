@@ -12,29 +12,29 @@ const RestaurantCard = ({ restaurant }) => {
   const [formattedAddress, setFormattedAddress] = useState('');
   const [isRestaurantOpen, setIsRestaurantOpen] = useState(false);
 
-  const { id_restaurant, name, address, picture, schedule } = restaurant;
+  const { id_restaurant, name, addresses, picture, schedules } = restaurant;
 
   useEffect(() => {
     /**
      * Format address and isOpen data
      */
     function formatData() {
-      if (address && address[0]) {
-        const [{ number, street, district, city, state }] = address;
+      if (addresses && addresses[0]) {
+        const [{ number, street, district, city, state }] = addresses;
         setFormattedAddress(
           `${street}, ${number || 'S/N'}, ${district}, ${city}-${state}`
         );
       }
 
-      if (schedule) {
-        const result = schedule.map(item => item.isOpen).includes(true);
+      if (schedules) {
+        const result = schedules.map(item => item.isOpen).includes(true);
 
         setIsRestaurantOpen(result);
       }
     }
 
     formatData();
-  }, [address, schedule]);
+  }, [addresses, schedules]);
 
   return (
     <Link
