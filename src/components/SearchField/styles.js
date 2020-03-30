@@ -8,6 +8,7 @@ export const SearchForm = styled.form`
 
   /* Other */
   box-shadow: 0px 2px 4px #00000029;
+  background-color: ${props => props.backgroundColor};
 
   ${media.lessThan('large')`        
     background-color: #FFF !important;
@@ -51,7 +52,6 @@ export const SearchInput = styled.input`
 `;
 
 export const SearchButton = styled.button`
-  width: 7%;
   border: none;
   padding: 11px;
   border-radius: 0 25px 25px 0;
