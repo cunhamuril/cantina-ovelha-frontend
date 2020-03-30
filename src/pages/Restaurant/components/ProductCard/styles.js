@@ -53,6 +53,10 @@ export const Container = styled.div`
   ${media.between('small', 'medium')`
     max-width: 300px;
     margin: 15px 10px;
+
+    .description {    
+      max-width: 150px;      
+    }
   `}
 
   ${media.lessThan('small')`
