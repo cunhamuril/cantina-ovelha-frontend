@@ -1,68 +1,58 @@
+/* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import DefaultImage from '../../../../assets/images/default.jpg';
 
-import { primary, primaryLight } from '../../../../theme/colors';
+// import { primary, primaryLight } from '../../../../theme/colors';
 import { Card, Thumbnail, OpenInfo } from './styles';
 
 const RestaurantCard = ({ restaurant }) => {
   const [formattedAddress, setFormattedAddress] = useState('');
   const [isRestaurantOpen, setIsRestaurantOpen] = useState(false);
 
-  // eslint-disable-next-line camelcase
-  const { id_restaurant, name, address, picture, schedule } = restaurant;
+  const { id_restaurant, name, addresses, picture, schedules } = restaurant;
 
   useEffect(() => {
     /**
      * Format address and isOpen data
      */
     function formatData() {
-      if (address[0]) {
-        const { number, street, district, city, state } = address[0];
+      if (addresses && addresses[0]) {
+        const [{ number, street, district, city, state }] = addresses;
         setFormattedAddress(
           `${street}, ${number || 'S/N'}, ${district}, ${city}-${state}`
         );
       }
 
-      if (schedule[0]) {
-        setIsRestaurantOpen(schedule[0].isOpen);
+      if (schedules) {
+        const result = schedules.map(item => item.isOpen).includes(true);
+
+        setIsRestaurantOpen(result);
       }
     }
 
     formatData();
-  }, [address, schedule]);
+  }, [addresses, schedules]);
 
   return (
     <Link
-      // eslint-disable-next-line camelcase
       to={`/restaurants/${id_restaurant}`}
       style={{ textDecoration: 'none' }}
     >
       <Card className="d-flex mb-5 mx-4">
         <OpenInfo
           className="d-flex align-items-center justify-content-center"
-          style={{
-            backgroundColor: isRestaurantOpen ? primary : primaryLight,
-          }}
+          isOpen={isRestaurantOpen}
         >
           <small>{isRestaurantOpen ? 'Aberto agora' : 'Fechado'}</small>
         </OpenInfo>
-        <div style={{ maxWidth: 100, maxHeight: 100 }}>
-          <Thumbnail
-            style={{
-              backgroundImage: `url(${picture ? picture.url : DefaultImage})`,
-            }}
-          />
-        </div>
-        <div className="d-flex flex-column justify-content-center mx-4 w-100">
-          <h5 className="m-0" style={{ maxHeight: 50 }}>
-            {name}
-          </h5>
+        <Thumbnail url={picture ? picture.url : DefaultImage} />
+        <div className="d-flex flex-column justify-content-center mx-4">
+          <h5 className="m-0">{name}</h5>
           <small
             className="restaurant-address text-muted"
-            style={{ maxHeight: 20, whiteSpace: 'nowrap' }}
             title={formattedAddress}
           >
             {formattedAddress}

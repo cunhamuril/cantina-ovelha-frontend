@@ -4,7 +4,7 @@ import { Container, Spinner } from 'reactstrap';
 import SearchField from '../../components/SearchField';
 import RestaurantCard from './components/RestaurantCard';
 
-import { darken } from '../../theme/colors';
+import { HomeContainer, CardsContainer } from './styles';
 
 import api from '../../services/api';
 const Home = () => {
@@ -12,10 +12,10 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
 
+  /**
+   * Render all restaurants data
+   */
   useEffect(() => {
-    /**
-     * Render all restaurants data
-     */
     async function renderData() {
       setRestaurants(await loadData());
       setLoading(false);
@@ -23,6 +23,28 @@ const Home = () => {
 
     renderData();
   }, []);
+
+  /**
+   * Interval: every 5 minutes a new request is made
+   */
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      setRestaurants(await loadData());
+    }, 1000 * 60 * 5);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  /**
+   * every time search is empty updates to show all restaurants
+   */
+  useEffect(() => {
+    (async function() {
+      if (search === '') {
+        setRestaurants(await loadData());
+      }
+    })();
+  }, [search]);
 
   /**
    * Load all restaurants data
@@ -58,14 +80,12 @@ const Home = () => {
   }
 
   return (
-    <div className="home">
+    <HomeContainer>
       <h2 className="mt-5 d-flex justify-content-center text-center">
-        <a href="/" style={{ textDecoration: 'none', color: darken }}>
-          Bem-vindo ao Lista Rango
-        </a>
+        <a href="/">Bem-vindo ao Lista Rango</a>
       </h2>
-      <Container className="d-flex align-items-center justify-content-center mt-4">
-        <div className="w-100 px-md-5 mx-md-5">
+      <Container className="d-flex align-items-center justify-content-center mt-4 px-md-5">
+        <div className="w-100 mx-md-5">
           <SearchField
             textLabel="Buscar estabelecimento"
             backgroundColor="#FBFBFB"
@@ -73,10 +93,7 @@ const Home = () => {
           />
         </div>
       </Container>
-      <Container
-        fluid
-        className="d-flex align-items-center justify-content-center flex-wrap mt-5"
-      >
+      <CardsContainer className="d-flex align-items-center justify-content-center flex-wrap mt-5">
         {loading ? (
           <Spinner size="lg" color="info" />
         ) : restaurants && restaurants.length > 0 ? (
@@ -91,8 +108,8 @@ const Home = () => {
             Nenhum item corresponde a pesquisa
           </h4>
         )}
-      </Container>
-    </div>
+      </CardsContainer>
+    </HomeContainer>
   );
 };
 

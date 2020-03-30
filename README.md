@@ -59,6 +59,7 @@ Desenvolvido em [React](https://reactjs.org/) e consumindo [API](https://github.
 
   - Organização de estilos com Styled Components, Bootstrap e CSS;
   - Responsividade de cards e modais.
+  - Sistemas de buscas.
   - Estrutura desta documentação.
 
 - **Padrões**

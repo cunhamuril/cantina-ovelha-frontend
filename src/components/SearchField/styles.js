@@ -8,6 +8,7 @@ export const Container = styled.form`
 
   /* Other */
   box-shadow: 0px 2px 4px #00000029;
+  background-color: ${props => props.backgroundColor};
 
   ${media.lessThan('large')`        
     background-color: #FFF !important;
