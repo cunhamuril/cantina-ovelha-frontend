@@ -43,7 +43,7 @@ Desenvolvido em [React](https://reactjs.org/) e consumindo [API](https://github.
 
 - **Sistema de busca**
 
-  - Desenvolver um sistema de busca performático e robusto. Para buscar precisa digitar exatamente como está cadastrado no banco de dados, com a primeira letra da palavra maiúscula.
+  - Desenvolver um sistema de busca mais performático e robusto
 
 - **Modal**
 
