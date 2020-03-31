@@ -39,7 +39,7 @@ Desenvolvido em [React](https://reactjs.org/) e consumindo [API](https://github.
 
 - **Cards**
 
-  - Posicionar corretamente e responsivamente selos de avisos (restaurante aberto ou fechado, promoções de produtos).
+  - Posicionar corretamente e responsivamente os cards e selos de avisos (restaurante aberto ou fechado, promoções de produtos).
 
 - **Sistema de busca**
 
