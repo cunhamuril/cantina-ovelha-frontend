@@ -107,7 +107,10 @@ const Restaurant = ({ match }) => {
 
     if (searchValue && searchValue.length > 0) {
       const filtered = products.filter(item => {
-        return item.product.name.indexOf(searchValue) !== -1;
+        return (
+          item.product.name.toLowerCase().indexOf(searchValue.toLowerCase()) !==
+          -1
+        );
       });
 
       onFilter('add', filtered);
