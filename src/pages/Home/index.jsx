@@ -75,7 +75,10 @@ const Home = () => {
       setRestaurants(data);
     } else {
       const filteredRestaurants = data.filter(restaurant => {
-        return restaurant.name.indexOf(searchValue) !== -1;
+        return (
+          restaurant.name.toLowerCase().indexOf(searchValue.toLowerCase()) !==
+          -1
+        );
       });
 
       setRestaurants(filteredRestaurants);
